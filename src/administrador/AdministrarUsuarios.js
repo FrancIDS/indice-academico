@@ -5,7 +5,7 @@ import TablaUsuarios from "./usuario/TablaUsuarios";
 
 function AdministrarUsuarios() {
     return (
-        <div style={{ background: "#f0f0f0", height: "100vh" }}>
+        <div style={{ background: "#e8f4fc", height: "100vh" }}>
             <Navbar selectedButton={"AdministrarUsuarios"} />
             <Container>
                 <Header as="h1">Administrar usuarios</Header>

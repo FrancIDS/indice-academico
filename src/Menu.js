@@ -9,7 +9,7 @@ function Menu() {
     const userRol = localStorage.getItem("userRol");
 
     return (
-        <div style={{ background: "#f0f0f0", height: "100vh" }}>
+        <div style={{ background: "#e8f4fc", height: "100%" }}>
             <Navbar selectedButton={"Menu"} />
             {userRol === "Estudiante" && <MenuEstudiante />}
             {userRol === "Profesor" && <MenuProfesor />}

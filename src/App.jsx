@@ -18,6 +18,7 @@ import HistorialAsignaturas from "./estudiante/HistorialAsignaturas";
 
 // Profesor
 import AdministrarSecciones from "./profesor/AdministrarSecciones";
+import CalificarEstudiantes from "./profesor/CalificarEstudiantes";
 
 function App() {
     return (
@@ -66,6 +67,13 @@ function App() {
                             </ProtectedRoute>
                         }
                     />
+                    <Route path="/CalificarEstudiantes" element={
+                        <ProtectedRoute>
+                            <CalificarEstudiantes />
+                        </ProtectedRoute>
+                    }>
+
+                    </Route>
 
                     {/* Administrador */}
                     <Route

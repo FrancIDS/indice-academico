@@ -10,7 +10,7 @@ function Navbar(props) {
 
     return (
         <div>
-            <Menu /* style={{background: "#10588f"}} */>
+            <Menu>
                 <Menu.Item>
                     <Image src="icon-s.png" size="mini"></Image>
                 </Menu.Item>
@@ -52,17 +52,32 @@ function Navbar(props) {
                 )}
 
                 {userRol === "Profesor" && (
-                    <Menu.Item as="a">
-                        <Link to="/AdministrarSecciones">
-                            <Button
-                                primary={
-                                    selectedButton === "AdministrarSecciones"
-                                }
-                            >
-                                Administrar secciones
-                            </Button>
-                        </Link>
-                    </Menu.Item>
+                    <>
+                        <Menu.Item as="a">
+                            <Link to="/AdministrarSecciones">
+                                <Button
+                                    primary={
+                                        selectedButton ===
+                                        "AdministrarSecciones"
+                                    }
+                                >
+                                    Administrar secciones
+                                </Button>
+                            </Link>
+                        </Menu.Item>
+                        <Menu.Item as="a">
+                            <Link to="/CalificarEstudiantes">
+                                <Button
+                                    primary={
+                                        selectedButton ===
+                                        "CalificarEstudiantes"
+                                    }
+                                >
+                                    Calificar estudiantes
+                                </Button>
+                            </Link>
+                        </Menu.Item>
+                    </>
                 )}
 
                 {userRol === "Administrador" && (

@@ -86,6 +86,7 @@ function MenuAdministrador() {
                     </Grid.Column>
                 </Grid>
             </Segment>
+            <footer style={{ height: "50px" }}></footer>
         </Container>
     );
 }

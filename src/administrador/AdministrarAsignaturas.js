@@ -10,7 +10,7 @@ function AdministrarAsignaturas() {
     const closeCrearAsignatura = () => setIsModalOpen(false);
 
     return (
-        <div style={{ background: "#f0f0f0", height: "100vh" }}>
+        <div style={{ background: "#e8f4fc", height: "100vh" }}>
             <Navbar selectedButton={"AdministrarAsignaturas"} />
             <Container>
                 <Header as="h1">Administrar asignaturas</Header>

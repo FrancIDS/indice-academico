@@ -29,10 +29,11 @@ function MenuProfesor() {
             <Segment color="blue" padded>
                 <Grid columns={1} centered>
                     <Grid.Column textAlign="center" style={{ width: "50vh" }}>
-                        <Header as="h2">Índice Académico</Header>
+                        <Header as="h2">Cantidad de asignaturas cursando: </Header>
                     </Grid.Column>
                 </Grid>
             </Segment>
+            <footer style={{ height: "50px" }}></footer>
         </Container>
     );
 }
