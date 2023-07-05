@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Table, Button } from "semantic-ui-react";
 
 const AsignaturasTable = ({ asignaturas }) => {
@@ -24,12 +24,13 @@ const AsignaturasTable = ({ asignaturas }) => {
                 </Table.Row>
             </Table.Header>
             <Table.Body>
+
                 {asignaturas.map((asignatura, index) => (
                     <Table.Row key={index}>
-                        <Table.Cell>{asignatura.codigo}</Table.Cell>
-                        <Table.Cell>{asignatura.titulo}</Table.Cell>
-                        <Table.Cell>{asignatura.credito}</Table.Cell>
-                        <Table.Cell>{asignatura.profesor}</Table.Cell>
+                        <Table.Cell>{asignatura.Codigo}</Table.Cell>
+                        <Table.Cell>{asignatura.Titulo}</Table.Cell>
+                        <Table.Cell>{asignatura.Credito}</Table.Cell>
+                        <Table.Cell>{asignatura.Profesor}</Table.Cell>
                         <Table.Cell>
                             <Button
                                 primary
@@ -52,33 +53,19 @@ const AsignaturasTable = ({ asignaturas }) => {
 };
 
 function TablaAsignaturas() {
-    let asignaturas = [
-        {
-            codigo: "M01",
-            titulo: "Algebra Lineal",
-            credito: 5,
-            profesor: "Randy Leonardo",
-        },
-        {
-            codigo: "M02",
-            titulo: "Ecuaciones Diferenciales",
-            credito: 5,
-            profesor: "Renso Rojas",
-        },
-        {
-            codigo: "M03",
-            titulo: "Matemática Discreta I",
-            credito: 4,
-            profesor: "Renso Rojas",
-        },
-        {
-            codigo: "M04",
-            titulo: "Matemática Discreta II",
-            credito: 4,
-            profesor: "Lidia Almonte",
-        },
-    ];
-
+    const [asignaturas, setAsignaturas] = useState([]);
+    useEffect(() => {
+        fetch('http://localhost:5000/Informacion/Asignaturas/Profesores')
+            .then((response) => response.json())
+            .then((data) => {
+                setAsignaturas(data)
+                console.log(asignaturas);
+            })
+            .catch((err) => {
+                console.log(err.message)
+            })
+        // data fetching here
+    }, []);
     return (
         <div style={{ padding: "10px" }}>
             <AsignaturasTable asignaturas={asignaturas} />
