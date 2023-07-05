@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Table, Button } from "semantic-ui-react";
 
 const UsuariosTable = ({ usuarios }) => {
@@ -28,12 +28,12 @@ const UsuariosTable = ({ usuarios }) => {
             <Table.Body>
                 {usuarios.map((usuario, index) => (
                     <Table.Row key={index}>
-                        <Table.Cell>{usuario.nombre}</Table.Cell>
-                        <Table.Cell>{usuario.apellido}</Table.Cell>
+                        <Table.Cell>{usuario.Nombre}</Table.Cell>
+                        <Table.Cell>{usuario.Apellido}</Table.Cell>
                         {/* <Table.Cell>{usuario.contrasena}</Table.Cell> */}
-                        <Table.Cell>{usuario.correo}</Table.Cell>
-                        <Table.Cell>{usuario.rol}</Table.Cell>
-                        <Table.Cell>{usuario.carrera}</Table.Cell>
+                        <Table.Cell>{usuario.Correo}</Table.Cell>
+                        <Table.Cell>{usuario.Rol}</Table.Cell>
+                        <Table.Cell>{usuario.Carrera}</Table.Cell>
                         <Table.Cell>
                             <Button
                                 primary
@@ -56,57 +56,19 @@ const UsuariosTable = ({ usuarios }) => {
 };
 
 function TablaUsuarios() {
-    let usuarios = [
-        {
-            nombre: "Francisco",
-            apellido: "Mesa",
-            contrasena: "TengoHambre",
-            correo: "Francisco.MC.IDS@Gmail.com",
-            rol: "Administrador",
-            carrera: "",
-        },
-        {
-            nombre: "Valentina",
-            apellido: "Vargas",
-            contrasena: "P4ssw0rd123",
-            correo: "valentina.vargas@example.com",
-            rol: "Estudiante",
-            carrera: "Ingeniería",
-        },
-        {
-            nombre: "Andrés",
-            apellido: "Pérez",
-            contrasena: "SecurePassword",
-            correo: "andres.perez@example.com",
-            rol: "Estudiante",
-            carrera: "Medicina",
-        },
-        {
-            nombre: "Ana",
-            apellido: "López",
-            contrasena: "Qwerty123",
-            correo: "ana.lopez@example.com",
-            rol: "Profesor",
-            carrera: "",
-        },
-        {
-            nombre: "Juan",
-            apellido: "González",
-            contrasena: "Pass123!",
-            correo: "juan.gonzalez@example.com",
-            rol: "Administrador",
-            carrera: "",
-        },
-        {
-            nombre: "María",
-            apellido: "Fernández",
-            contrasena: "Password123",
-            correo: "maria.fernandez@example.com",
-            rol: "Estudiante",
-            carrera: "Economía",
-        },
-    ];
-
+    const [usuarios, setUsuarios] = useState([]);
+    useEffect(() => {
+        fetch('http://localhost:5000/Informacion/Usuarios/Mostrar')
+            .then((response) => response.json())
+            .then((data) => {
+                setUsuarios(data)
+                console.log(usuarios);
+            })
+            .catch((err) => {
+                console.log(err.message)
+            })
+        // data fetching here
+    }, []);
     return (
         <div style={{ padding: "10px" }}>
             <UsuariosTable usuarios={usuarios} />

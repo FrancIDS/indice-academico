@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Header, Segment, Grid, Table } from "semantic-ui-react";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
@@ -6,12 +6,42 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 function MenuAdministrador() {
+    const [areas, setAreas] = useState([]);
+    const [users, setUsers] = useState([]);
+    useEffect(() => {
+        fetch('http://localhost:5000/Informacion/Areas/Mostrar')
+            .then((response) => response.json())
+            .then((data) => {
+                setAreas(data)
+                console.log(areas);
+            })
+            .catch((err) => {
+                console.log(err.message)
+            });
+
+        fetch('http://localhost:5000/Informacion/Usuario/Contar')
+            .then((response) => response.json())
+            .then((data) => {
+                setUsers(data)
+                console.log(users);
+            })
+            .catch((err) => {
+                console.log(err.message)
+            })
+    }, []);
+
+    let areaLabels = areas.map((area) => area.Area);
+    let areaData = areas.map((area) => area.Asignaturas);
+
+    let userLabels = users.map((user) => user.Rol);
+    let userData = users.map((user) => user.Usuarios);
+
     const asignaturas = {
-        labels: ["Area: M", "Area: S", "Area: L", "Area: F"],
+        labels: areaLabels,
         datasets: [
             {
                 label: "Cantidad de asignaturas",
-                data: [3, 2, 6, 5],
+                data: areaData,
                 backgroundColor: [
                     "rgba(26, 143, 232, 0.2)",
                     "rgba(22, 120, 194, 0.2)",
@@ -29,11 +59,11 @@ function MenuAdministrador() {
         ],
     };
     const usuarios = {
-        labels: ["Rol: Administrador", "Rol: Profesor", "Rol: Estudiante"],
+        labels: userLabels,
         datasets: [
             {
                 label: "Cantidad de usuarios",
-                data: [3, 6, 23],
+                data: userData,
                 backgroundColor: [
                     "rgba(26, 143, 232, 0.2)",
                     "rgba(22, 120, 194, 0.2)",
