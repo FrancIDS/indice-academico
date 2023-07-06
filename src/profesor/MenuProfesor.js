@@ -1,7 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Header, Table, Segment, Grid } from "semantic-ui-react";
 
 function MenuProfesor() {
+    const [cantidad, setCantidad] = useState([]);
+    useEffect(() => {
+        fetch('http://localhost:5000/Profesores/Asignaturas/Cantidad', {
+            method: "POST",
+            body: JSON.stringify({
+                profesor: localStorage.getItem("userUsuario"),
+                periodo: "23-01",
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setCantidad(data[0]);
+            })
+            .catch((err) => {
+                console.log(err.message);
+            });
+    }, []);
+
     return (
         <Container style={{ height: "100vh" }}>
             <Header as="h1">
@@ -38,7 +59,7 @@ function MenuProfesor() {
                 <Grid columns={1} centered>
                     <Grid.Column textAlign="center" style={{ width: "50vh" }}>
                         <Header as="h2">
-                            Cantidad de asignaturas asignadas:
+                            Cantidad de asignaturas asignadas: {cantidad.Asignaturas}
                         </Header>
                     </Grid.Column>
                 </Grid>
