@@ -1,49 +1,218 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Button, Modal, Grid } from "semantic-ui-react";
 
 function UsuarioCrear({ isOpen, closeModal }) {
-    const handleSubmit = (e) => {};
+    const handleSubmit = (e) => {
+        if (selectedRol === 1) { //Administrador
+            fetch("http://localhost:5000/Profesores/Insertar", {
+                method: 'POST',
+                body: JSON.stringify({
+                    nombre: nombre,
+                    usuario: usuario,
+                    apellido: apellido,
+                    correo: correo,
+                    contrasena: password,
+                    rolID: selectedRol,
+                }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    closeModal();
+                })
+                .catch((err) => {
+                    console.log(err.message);
+                });
+        } else if (selectedRol === 2) {//Profesor
+            fetch("http://localhost:5000/Profesores/Insertar", {
+                method: 'POST',
+                body: JSON.stringify({
+                    nombre: nombre,
+                    usuario: usuario,
+                    apellido: apellido,
+                    correo: correo,
+                    contrasena: password,
+                    rolID: selectedRol,
+                }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    closeModal();
+                })
+                .catch((err) => {
+                    console.log(err.message);
+                });
+        } else { //Estudiante
+            fetch("http://localhost:5000/Estudiantes/Insertar", {
+                method: 'POST',
+                body: JSON.stringify({
+                    nombre: nombre,
+                    usuario: usuario,
+                    apellido: apellido,
+                    correo: correo,
+                    contrasena: password,
+                    rolID: selectedRol,
+                    carreraID: selectedCarrera,
+                }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    closeModal();
+                })
+                .catch((err) => {
+                    console.log(err.message);
+                });
+        }
+        fetch("http://localhost:5000/Usuarios/Pregunta/Insertar", {
+            method: 'POST',
+            body: JSON.stringify({
+                preguntaID: selectedPregunta1,
+                usuario: usuario,
+                respuesta: respuesta1,
+            }), headers: { 'Content-type': 'application/json; charset=UTF-8', },
+        })
+            .then((response) => response.json())
+            .then((data) => { })
+            .catch((err) => { console.log(err.message); });
+
+        fetch("http://localhost:5000/Usuarios/Pregunta/Insertar", {
+            method: 'POST',
+            body: JSON.stringify({
+                preguntaID: selectedPregunta2,
+                usuario: usuario,
+                respuesta: respuesta2,
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => { })
+            .catch((err) => { console.log(err.message); });
+
+        fetch("http://localhost:5000/Usuarios/Pregunta/Insertar", {
+            method: 'POST',
+            body: JSON.stringify({
+                preguntaID: selectedPregunta3,
+                usuario: usuario,
+                respuesta: respuesta3,
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+            })
+            .catch((err) => { console.log(err.message); });
+
+        setNombre("");
+        setUsuario("");
+        setApellido("");
+        setCorreo("");
+        setPassword("");
+        setSelectedRol("");
+        setSelectedCarrera("");
+        setRespuesta1("");
+        setRespuesta2("");
+        setRespuesta3("");
+        setSelectedPregunta1("");
+        setSelectedPregunta2("");
+        setSelectedPregunta3("");
+    };
+
+
+    const [roles, setRoles] = useState([]);
+    const [carreras, setCarreras] = useState([]);
+    const [preguntas, setPreguntas] = useState([]);
+
+    useEffect(() => {
+        fetch("http://localhost:5000/Informacion/Roles/Mostrar")
+            .then((response) => response.json())
+            .then((data) => {
+                setRoles(data);
+            })
+            .catch((err) => {
+                console.log(err.message);
+            });
+
+        fetch("http://localhost:5000/Informacion/Carreras/Mostrar")
+            .then((response) => response.json())
+            .then((data) => {
+                setCarreras(data);
+            })
+            .catch((err) => {
+                console.log(err.message);
+            });
+
+        fetch("http://localhost:5000/Informacion/Preguntas/Mostrar")
+            .then((response) => response.json())
+            .then((data) => {
+                setPreguntas(data);
+            })
+            .catch((err) => {
+                console.log(err.message);
+            });
+        // data fetching here
+    }, []);
 
     const [usuario, setUsuario] = useState("");
     const [password, setPassword] = useState("");
     const [nombre, setNombre] = useState("");
     const [apellido, setApellido] = useState("");
     const [correo, setCorreo] = useState("");
+
+
+    // ComboBox
+
+
+    const handleRolChange = (e, { value }) => setSelectedRol(value);
+    const handleCarreraChange = (e, { value }) => setSelectedCarrera(value);
+    const handleRespuesta1Change = (e, { value }) => setRespuesta1(value);
+    const handleRespuesta2Change = (e, { value }) => setRespuesta2(value);
+    const handleRespuesta3Change = (e, { value }) => setRespuesta3(value);
+    const handleSelectedPregunta1Change = (e, { value }) => setSelectedPregunta1(value);
+    const handleSelectedPregunta2Change = (e, { value }) => setSelectedPregunta2(value);
+    const handleSelectedPregunta3Change = (e, { value }) => setSelectedPregunta3(value);
+
+    const [selectedRol, setSelectedRol] = useState("");
+    const [selectedCarrera, setSelectedCarrera] = useState("");
     const [respuesta1, setRespuesta1] = useState("");
     const [respuesta2, setRespuesta2] = useState("");
     const [respuesta3, setRespuesta3] = useState("");
+    const [selectedPregunta1, setSelectedPregunta1] = useState("");
+    const [selectedPregunta2, setSelectedPregunta2] = useState("");
+    const [selectedPregunta3, setSelectedPregunta3] = useState("");
 
-    /* const [rol, setRol] = useState("");
-    const [carrera, setCarrera] = useState("");
-    const handleRolChange = (e) => setRol(e.target.value);
-    const handleCarreraChange = (e) => setCarrera(e.target.value); */
+    const handleUsuarioChange = (e, { value }) => setUsuario(value);
+    const handlePasswordChange = (e, { value }) => setPassword(value);
+    const handleNombreChange = (e, { value }) => setNombre(value);
+    const handleApellidoChange = (e, { value }) => setApellido(value);
+    const handleCorreoChange = (e, { value }) => setCorreo(value);
 
-    const handleUsuarioChange = (e) => setUsuario(e.target.value);
-    const handlePasswordChange = (e) => setPassword(e.target.value);
-    const handleNombreChange = (e) => setNombre(e.target.value);
-    const handleApellidoChange = (e) => setApellido(e.target.value);
-    const handleCorreoChange = (e) => setCorreo(e.target.value);
-    const handleRespuesta1Change = (e) => setRespuesta1(e.target.value);
-    const handleRespuesta2Change = (e) => setRespuesta2(e.target.value);
-    const handleRespuesta3Change = (e) => setRespuesta3(e.target.value);
+    const optionsRol = [];
 
-    const optionsRol = [
-        { text: "Administrador", value: "Administrador" },
-        { text: "Profesor", value: "Profesor" },
-        { text: "Estudiante", value: "Estudiante" },
-    ];
+    roles.map((x) => {
+        optionsRol.push({ text: x.Rol, value: x.ID });
+    })
 
-    const optionsCarrera = [
-        { text: "Ingeniería", value: "Ingeniería" },
-        { text: "Economía", value: "Economía" },
-        { text: "Medicina", value: "Medicina" },
-    ];
+    const optionsCarrera = [];
+    carreras.map((x) => {
+        optionsCarrera.push({ text: x.Carrera, value: x.ID });
+    })
 
-    const optionsPreguntas = [
-        { text: "¿Cuál es el nombre de abuelo?", value: "1" },
-        { text: "¿Cuál es el nombre de tu primer sobrino?", value: "2" },
-        { text: "¿Cuál es tu ciudad de nacimiento?", value: "3" },
-    ];
+    const optionsPreguntas = [];
+    preguntas.map((x) => {
+        optionsPreguntas.push({ text: x.Pregunta, value: x.ID });
+    })
 
     return (
         <Modal size="large" open={isOpen} onClose={closeModal}>
@@ -101,12 +270,16 @@ function UsuarioCrear({ isOpen, closeModal }) {
                                         label="Rol"
                                         placeholder="Rol"
                                         options={optionsRol}
+                                        value={selectedRol}
+                                        onChange={handleRolChange}
                                     />
                                     <Form.Select
                                         width={5}
                                         label="Carrera"
                                         placeholder="Carrera"
                                         options={optionsCarrera}
+                                        value={selectedCarrera}
+                                        onChange={handleCarreraChange}
                                     />
                                 </Form.Group>
                             </Grid.Column>
@@ -116,6 +289,8 @@ function UsuarioCrear({ isOpen, closeModal }) {
                                     label="Pregunta de seguridad 1"
                                     placeholder="Pregunta de seguridad 1"
                                     options={optionsPreguntas}
+                                    value={selectedPregunta1}
+                                    onChange={handleSelectedPregunta1Change}
                                 />
                                 <Form.Input
                                     fluid
@@ -129,6 +304,8 @@ function UsuarioCrear({ isOpen, closeModal }) {
                                     label="Pregunta de seguridad 2"
                                     placeholder="Pregunta de seguridad 2"
                                     options={optionsPreguntas}
+                                    value={selectedPregunta2}
+                                    onChange={handleSelectedPregunta2Change}
                                 />
                                 <Form.Input
                                     fluid
@@ -142,6 +319,8 @@ function UsuarioCrear({ isOpen, closeModal }) {
                                     label="Pregunta de seguridad 3"
                                     placeholder="Pregunta de seguridad 3"
                                     options={optionsPreguntas}
+                                    value={selectedPregunta3}
+                                    onChange={handleSelectedPregunta3Change}
                                 />
                                 <Form.Input
                                     fluid
@@ -154,13 +333,13 @@ function UsuarioCrear({ isOpen, closeModal }) {
                         </Grid>
 
                         {/* <Divider hidden /> */}
+                        <Button primary fluid type="submit">
+                            Crear usuario
+                        </Button>
                     </Form>
                 </div>
             </Modal.Content>
             <Modal.Actions>
-                <Button primary fluid type="submit">
-                    Crear usuario
-                </Button>
             </Modal.Actions>
         </Modal>
     );
