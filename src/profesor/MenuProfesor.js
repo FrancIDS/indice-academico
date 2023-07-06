@@ -38,7 +38,7 @@ function MenuProfesor() {
                 <Grid columns={1} centered>
                     <Grid.Column textAlign="center" style={{ width: "50vh" }}>
                         <Header as="h2">
-                            Cantidad de asignaturas asignadas:{" "}
+                            Cantidad de asignaturas asignadas:
                         </Header>
                     </Grid.Column>
                 </Grid>
