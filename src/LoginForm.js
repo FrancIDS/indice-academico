@@ -17,16 +17,10 @@ const LoginForm = () => {
 
     const [usuario, setUsuario] = useState("");
     const [password, setPassword] = useState("");
+    const handleUsuarioChange = (e) => setUsuario(e.target.value);
+    const handlePasswordChange = (e) => setPassword(e.target.value);
 
-    const handleUsuarioChange = (e) => {
-        setUsuario(e.target.value);
-    };
-
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    };
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         // Aquí puedes realizar alguna acción con los datos ingresados, como enviar una solicitud al servidor
         if ((usuario === password) === "") {

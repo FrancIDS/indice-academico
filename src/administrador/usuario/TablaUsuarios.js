@@ -61,7 +61,7 @@ function TablaUsuarios() {
         fetch('http://localhost:5000/Informacion/Usuarios/Mostrar')
             .then((response) => response.json())
             .then((data) => {
-                setUsuarios(data)
+                setUsuarios(data);
                 console.log(usuarios);
             })
             .catch((err) => {

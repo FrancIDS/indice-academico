@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import { Container, Header, Segment, Table } from "semantic-ui-react";
 
@@ -17,8 +17,8 @@ const TablaAsignaturas = ({ asignaturas }) => {
                 {asignaturas.map((asignatura, index) => (
                     <Table.Row key={index}>
                         <Table.Cell>{asignatura.Codigo}</Table.Cell>
-                        <Table.Cell>{asignatura.Titulo}</Table.Cell>
-                        <Table.Cell>{asignatura.Credito}</Table.Cell>
+                        <Table.Cell>{asignatura.Nombre}</Table.Cell>
+                        <Table.Cell>{asignatura.Creditos}</Table.Cell>
                         <Table.Cell>{asignatura.Calificacion}</Table.Cell>
                     </Table.Row>
                 ))}
@@ -28,20 +28,27 @@ const TablaAsignaturas = ({ asignaturas }) => {
 };
 
 function HistorialAsignaturas() {
-    let asignaturas = [
-        {
-            Codigo: "M01",
-            Titulo: "Algebra",
-            Credito: 5,
-            Calificacion: "A",
-        },
-        {
-            Codigo: "F01",
-            Titulo: "Física",
-            Credito: 3,
-            Calificacion: "B",
-        },
-    ];
+    const [historial, setHistorial] = useState([]);
+    useEffect(() => {
+        fetch('http://localhost:5000/Estudiantes/Asignaturas/Cursadas', {
+            method: 'POST',
+            body: JSON.stringify({
+                usuario: localStorage.getItem("userUsuario"),
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setHistorial(data)
+                console.log(historial);
+            })
+            .catch((err) => {
+                console.log(err.message)
+            })
+        // data fetching here
+    }, []);
 
     return (
         <div style={{ background: "#e8f4fc", height: "100vh" }}>
@@ -49,7 +56,7 @@ function HistorialAsignaturas() {
             <Container>
                 <Header as="h1">Historial de asignaturas</Header>
                 <Segment color="blue">
-                    <TablaAsignaturas asignaturas={asignaturas} />
+                    <TablaAsignaturas asignaturas={historial} />
                 </Segment>
             </Container>
         </div>
