@@ -1,14 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Button, Modal } from "semantic-ui-react";
 
 function AsignaturaCrear({ isOpen, closeModal }) {
     const handleSubmit = (e) => {};
+    const [profesores, setProfesores] = useState([]);
+    
+    useEffect(() => {
+        fetch('http://localhost:5000/Informacion/Profesores/Mostrar')
+            .then((response) => response.json())
+            .then((data) => {
+                setProfesores(data);
+                console.log(profesores);
+            })
+            .catch((err) => {
+                console.log(err.message)
+            })
+        // data fetching here
+    }, []);
 
-    const optionsProfesor = [
-        { text: "Francia Mejía", value: "Francia Mejía" },
-        { text: "Bernardo Batista", value: "Bernardo Batista" },
-        { text: "Ernesto Mancebo", value: "Ernesto Mancebo" },
-    ];
+    const optionsProfesor = [];
+    profesores.map((x) => {
+        optionsProfesor.push({text: x.Nombre, value: x.ID})
+    })
+    
 
     return (
         <Modal size="small" dimmer open={isOpen} onClose={closeModal}>
