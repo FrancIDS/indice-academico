@@ -2,26 +2,88 @@ import React, { useEffect, useState } from "react";
 import { Form, Modal, Grid, Button } from "semantic-ui-react";
 
 function UsuarioEditar({ isOpen, closeModal }) {
-    const handleSubmit = (e) => {};
 
+    const handleSubmit = (e) => {
+        if (selectedRol === 'Administrador') { //Administrador
+            fetch("http://localhost:5000/Profesores/Actualizar", {
+                method: 'PATCH',
+                body: JSON.stringify({
+                    nombre: nombre,
+                    usuario: usuario,
+                    apellido: apellido,
+                    correo: correo,
+                    contrasena: password,
+                }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    closeModal();
+                })
+                .catch((err) => {
+                    console.log(err.message);
+                });
+        } else if (selectedRol === 'Profesor') {//Profesor
+            fetch("http://localhost:5000/Profesores/Actualizar", {
+                method: 'PATCH',
+                body: JSON.stringify({
+                    nombre: nombre,
+                    usuario: usuario,
+                    apellido: apellido,
+                    correo: correo,
+                    contrasena: password,
+                }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    closeModal();
+                })
+                .catch((err) => {
+                    console.log(err.message);
+                });
+        } else { //Estudiante
+            fetch("http://localhost:5000/Estudiantes/Actualizar", {
+                method: 'PATCH',
+                body: JSON.stringify({
+                    nombre: nombre,
+                    usuario: usuario,
+                    apellido: apellido,
+                    correo: correo,
+                    contrasena: password,
+                }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    closeModal();
+                })
+                .catch((err) => {
+                    console.log(err.message);
+                });
+        }
+    };
+    const [usuario, setUsuario] = useState("");
     const [password, setPassword] = useState("");
     const [nombre, setNombre] = useState("");
     const [apellido, setApellido] = useState("");
     const [correo, setCorreo] = useState("");
-    const [roles, setRoles] = useState([]);
-    const [carreras, setCarreras] = useState([]);
-    const [preguntas, setPreguntas] = useState([]);
     const [selectedRol, setSelectedRol] = useState("");
     const [selectedCarrera, setSelectedCarrera] = useState("");
     const [respuesta1, setRespuesta1] = useState("");
     const [respuesta2, setRespuesta2] = useState("");
     const [respuesta3, setRespuesta3] = useState("");
+    const [preguntas, setPreguntas] = useState([]);
     const [selectedPregunta1, setSelectedPregunta1] = useState("");
     const [selectedPregunta2, setSelectedPregunta2] = useState("");
     const [selectedPregunta3, setSelectedPregunta3] = useState("");
 
-    const handleRolChange = (e, { value }) => setSelectedRol(value);
-    const handleCarreraChange = (e, { value }) => setSelectedCarrera(value);
     const handleRespuesta1Change = (e, { value }) => setRespuesta1(value);
     const handleRespuesta2Change = (e, { value }) => setRespuesta2(value);
     const handleRespuesta3Change = (e, { value }) => setRespuesta3(value);
@@ -33,10 +95,35 @@ function UsuarioEditar({ isOpen, closeModal }) {
     const handleApellidoChange = (e, { value }) => setApellido(value);
     const handleCorreoChange = (e, { value }) => setCorreo(value);
 
-    const optionsRol = [];
-    const optionsCarrera = [];
-    const optionsPreguntas = [];
+    useEffect(() => {
+        
+        setUsuario(localStorage.getItem("usuario"));
+        setNombre(localStorage.getItem("nombre"));
+        setApellido(localStorage.getItem("apellido"));
+        setCorreo(localStorage.getItem("correo"));
+        setPassword(localStorage.getItem("contrasena"));
+        setSelectedRol(localStorage.getItem("rol"));
+        setSelectedCarrera(localStorage.getItem("carrera"));
+        setSelectedPregunta1(null);
+        setSelectedPregunta2(null);
+        setSelectedPregunta3(null);
 
+
+        fetch("http://localhost:5000/Informacion/Preguntas/Mostrar")
+            .then((response) => response.json())
+            .then((data) => {
+                setPreguntas(data);
+            })
+            .catch((err) => {
+                console.log(err.message);
+            });
+    }, [localStorage.getItem("nombre"), localStorage.getItem("apellido"), localStorage.getItem("correo"), 
+    localStorage.getItem("contrasena"), localStorage.getItem("rol"), localStorage.getItem("carrera"),localStorage.getItem("pregunta")])
+
+    const optionsPreguntas = [];
+    preguntas.map((x) => {
+        optionsPreguntas.push({ text: x.Pregunta, value: x.ID });
+    })
     return (
         <Modal size="large" open={isOpen} onClose={closeModal}>
             <Modal.Header as="h2">Editar usuario</Modal.Header>
@@ -51,7 +138,7 @@ function UsuarioEditar({ isOpen, closeModal }) {
                                         width={5}
                                         label="Usuario"
                                         placeholder="Usuario"
-                                        value={"AAAAAA"}
+                                        value={usuario}
                                     />
                                     <Form.Input
                                         width={5}
@@ -64,6 +151,7 @@ function UsuarioEditar({ isOpen, closeModal }) {
                                 </Form.Group>
                                 <Form.Group widths="equal">
                                     <Form.Input
+
                                         width={5}
                                         label="Nombre"
                                         placeholder="Nombre"
@@ -91,18 +179,14 @@ function UsuarioEditar({ isOpen, closeModal }) {
                                     <Form.Select
                                         width={5}
                                         label="Rol"
-                                        placeholder="Rol"
-                                        options={optionsRol}
+                                        placeholder={selectedRol}
                                         value={selectedRol}
-                                        onChange={handleRolChange}
                                     />
                                     <Form.Select
                                         width={5}
                                         label="Carrera"
-                                        placeholder="Carrera"
-                                        options={optionsCarrera}
+                                        placeholder={selectedCarrera}
                                         value={selectedCarrera}
-                                        onChange={handleCarreraChange}
                                     />
                                 </Form.Group>
                             </Grid.Column>

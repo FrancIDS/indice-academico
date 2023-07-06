@@ -1,13 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Table, Button } from "semantic-ui-react";
 import UsuarioEditar from "./UsuarioEditar";
 
 const UsuariosTable = ({ usuarios }) => {
-    const [usuarioEditar, setUsuarioEditar] = useState({});
+    const [preguntas, setPreguntas] = useState([]);
 
     const [isModalOpenEditar, setIsModalOpenEditar] = useState(false);
-    const openEditarUsuario = () => setIsModalOpenEditar(true);
-    const closeEditarUsuario = () => setIsModalOpenEditar(false);
+    const openEditarUsuario = (usuario) => setIsModalOpenEditar(true);
+    const closeEditarUsuario = () => {
+        setIsModalOpenEditar(false);
+        localStorage.removeItem("usuario");
+        localStorage.removeItem("nombre");
+        localStorage.removeItem("apellido");
+        localStorage.removeItem("correo");
+        localStorage.removeItem("contrasena");
+        localStorage.removeItem("rol");
+        localStorage.removeItem("carrera");
+    };
 
     const handleEliminar = (usuario) => {
         console.log("Eliminar usuario:", usuario);
@@ -39,9 +48,26 @@ const UsuariosTable = ({ usuarios }) => {
                             <Table.Cell>
                                 <Button
                                     primary
-                                    onClick={openEditarUsuario}
+                                    onClick={() => {
+                                        openEditarUsuario();
+                                        localStorage.setItem("usuario", usuario.Usuario);
+                                        console.log(localStorage.getItem("usuario"));
+                                        localStorage.setItem("nombre", usuario.Nombre);
+                                        console.log(localStorage.getItem("nombre"));
+                                        localStorage.setItem("apellido", usuario.Apellido);
+                                        console.log(localStorage.getItem("apellido"));
+                                        localStorage.setItem("correo", usuario.Correo);
+                                        console.log(localStorage.getItem("correo"));
+                                        localStorage.setItem("contrasena", usuario.Contrasena);
+                                        console.log(localStorage.getItem("contrasena"));
+                                        localStorage.setItem("rol", usuario.Rol);
+                                        console.log(localStorage.getItem("rol"));
+                                        localStorage.setItem("carrera", usuario.Carrera);
+                                        console.log(localStorage.getItem("carrera"));
+                                    }}
                                     content="Editar"
                                     size="compact"
+
                                 />
                                 <Button
                                     primary

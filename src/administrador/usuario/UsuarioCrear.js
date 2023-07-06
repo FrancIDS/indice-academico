@@ -199,17 +199,17 @@ function UsuarioCrear({ isOpen, closeModal }) {
     const handleCorreoChange = (e, { value }) => setCorreo(value);
 
     const optionsRol = [];
+    const optionsCarrera = [];
+    const optionsPreguntas = [];
 
     roles.map((x) => {
         optionsRol.push({ text: x.Rol, value: x.ID });
     })
 
-    const optionsCarrera = [];
     carreras.map((x) => {
         optionsCarrera.push({ text: x.Carrera, value: x.ID });
     })
 
-    const optionsPreguntas = [];
     preguntas.map((x) => {
         optionsPreguntas.push({ text: x.Pregunta, value: x.ID });
     })
