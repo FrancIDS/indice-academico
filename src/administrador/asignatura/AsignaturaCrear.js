@@ -2,13 +2,59 @@ import React, { useEffect, useState } from "react";
 import { Form, Button, Modal } from "semantic-ui-react";
 
 function AsignaturaCrear({ isOpen, closeModal }) {
-    const handleSubmit = (e) => {};
+    const handleSubmit = (e) => {
+        fetch("http://localhost:5000/Asignaturas/Insertar", {
+            method: 'POST',
+            body: JSON.stringify({
+                codigo: codigo,
+                nombre: titulo.toUpperCase(),
+                credito: credito,
+                area: selectedArea,
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                closeModal();
+            })
+            .catch((err) => {
+                console.log(err.message);
+            });
+
+        fetch("http://localhost:5000/Asignaturas/Asignar/Profesor", {
+            method: 'POST',
+            body: JSON.stringify({
+                codigo: codigo,
+                profesor: selectedProfesor,
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+            })
+            .catch((err) => {
+                console.log(err.message);
+            });
+    };
+
+    const handleAreaChange = (e, { value }) => setSelectedArea(value);
+    const handleProfesorChange = (e, { value }) => setSelectedProfesor(value);
 
     const [profesores, setProfesores] = useState([]);
+    const [areas, setAreas] = useState([]);
 
+    //Campos
     const [codigo, setCodigo] = useState("");
     const [titulo, setTitulo] = useState("");
     const [credito, setCredito] = useState("");
+
+    // ComboBox
+    const [selectedArea, setSelectedArea] = useState("");
+    const [selectedProfesor, setSelectedProfesor] = useState("");
 
     const handleCodigoChange = (e) => setCodigo(e.target.value);
     const handleTituloChange = (e) => setTitulo(e.target.value);
@@ -19,7 +65,15 @@ function AsignaturaCrear({ isOpen, closeModal }) {
             .then((response) => response.json())
             .then((data) => {
                 setProfesores(data);
-                console.log(profesores);
+            })
+            .catch((err) => {
+                console.log(err.message);
+            });
+
+        fetch("http://localhost:5000/Informacion/Areas/Mostrar")
+            .then((response) => response.json())
+            .then((data) => {
+                setAreas(data);
             })
             .catch((err) => {
                 console.log(err.message);
@@ -29,13 +83,17 @@ function AsignaturaCrear({ isOpen, closeModal }) {
 
     const optionsProfesor = [];
     profesores.map((x) => {
-        optionsProfesor.push({ text: x.Nombre, value: x.ID });
+        optionsProfesor.push({ text: x.Nombre, value: x.Usuario });
     });
 
     const optionsArea = [];
 
+    areas.map((x) => {
+        optionsArea.push({ text: x.Area, value: x.ID });
+    });
+
     return (
-        <Modal size="small" dimmer open={isOpen} onClose={closeModal}>
+        <Modal size="small" open={isOpen} onClose={closeModal}>
             <Modal.Header as="h2">Crear asignatura</Modal.Header>
             <Modal.Content>
                 <div style={{ padding: "20px" }}>
@@ -70,21 +128,25 @@ function AsignaturaCrear({ isOpen, closeModal }) {
                                 label="Profesor asignado"
                                 placeholder="Profesor asignado"
                                 options={optionsProfesor}
+                                value={selectedProfesor}
+                                onChange={handleProfesorChange}
                             />
                             <Form.Select
                                 width={4}
                                 label="Area"
                                 placeholder="Area"
                                 options={optionsArea}
+                                value={selectedArea}
+                                onChange={handleAreaChange}
                             />
                         </Form.Group>
+                        <Button primary type="submit">
+                            Crear asignatura
+                        </Button>
                     </Form>
                 </div>
             </Modal.Content>
             <Modal.Actions>
-                <Button primary type="submit">
-                    Crear asignatura
-                </Button>
             </Modal.Actions>
         </Modal>
     );
