@@ -10,7 +10,7 @@ function AdministrarUsuarios() {
     const closeCrearUsuario = () => setIsModalOpen(false);
 
     return (
-        <div style={{ background: "#e8f4fc", height: "100vh" }}>
+        <div style={{ background: "#e8f4fc", height: "100%" }}>
             <Navbar selectedButton={"AdministrarUsuarios"} />
             <Container>
                 <Header as="h1">Administrar usuarios</Header>
