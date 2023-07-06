@@ -81,10 +81,9 @@ function MenuAdministrador() {
         ],
     };
 
-    const userRol = localStorage.getItem("userRol");
     return (
         <Container>
-            <Header as="h1">Bienvenido, @FrancIDS</Header>
+            <Header as="h1">Bienvenido, @{localStorage.getItem("userUsuario")}</Header>
             <Table celled color="blue">
                 <Table.Header>
                     <Table.Row>
@@ -96,10 +95,10 @@ function MenuAdministrador() {
                 </Table.Header>
                 <Table.Body>
                     <Table.Row>
-                        <Table.Cell>{userRol}</Table.Cell>
-                        <Table.Cell>Francisco</Table.Cell>
-                        <Table.Cell>Mesa</Table.Cell>
-                        <Table.Cell>Francisco.MC.IDS@Gmail.com</Table.Cell>
+                        <Table.Cell>{localStorage.getItem("userRol")}</Table.Cell>
+                        <Table.Cell>{localStorage.getItem("userNombre")}</Table.Cell>
+                        <Table.Cell>{localStorage.getItem("userApellido")}</Table.Cell>
+                        <Table.Cell>{localStorage.getItem("userCorreo")}</Table.Cell>
                     </Table.Row>
                 </Table.Body>
             </Table>

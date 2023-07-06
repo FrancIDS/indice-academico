@@ -2,11 +2,11 @@ import React from "react";
 import { Container, Header, Table, Segment, Grid } from "semantic-ui-react";
 
 function MenuProfesor() {
-    const userRol = localStorage.getItem("userRol");
-
     return (
-        <Container>
-            <Header as="h1">Bienvenido, @Fernando</Header>
+        <Container style={{ height: "100vh" }}>
+            <Header as="h1">
+                Bienvenido, @{localStorage.getItem("userUsuario")}
+            </Header>
             <Table celled color="blue">
                 <Table.Header>
                     <Table.Row>
@@ -18,10 +18,18 @@ function MenuProfesor() {
                 </Table.Header>
                 <Table.Body>
                     <Table.Row>
-                        <Table.Cell>{userRol}</Table.Cell>
-                        <Table.Cell>Fernando</Table.Cell>
-                        <Table.Cell>Batista</Table.Cell>
-                        <Table.Cell>fernandolo@gmail.com</Table.Cell>
+                        <Table.Cell>
+                            {localStorage.getItem("userRol")}
+                        </Table.Cell>
+                        <Table.Cell>
+                            {localStorage.getItem("userNombre")}
+                        </Table.Cell>
+                        <Table.Cell>
+                            {localStorage.getItem("userApellido")}
+                        </Table.Cell>
+                        <Table.Cell>
+                            {localStorage.getItem("userCorreo")}
+                        </Table.Cell>
                     </Table.Row>
                 </Table.Body>
             </Table>
@@ -29,7 +37,9 @@ function MenuProfesor() {
             <Segment color="blue" padded>
                 <Grid columns={1} centered>
                     <Grid.Column textAlign="center" style={{ width: "50vh" }}>
-                        <Header as="h2">Cantidad de asignaturas cursando: </Header>
+                        <Header as="h2">
+                            Cantidad de asignaturas asignadas:
+                        </Header>
                     </Grid.Column>
                 </Grid>
             </Segment>
