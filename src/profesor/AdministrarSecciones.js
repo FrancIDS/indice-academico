@@ -1,45 +1,83 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import { Container, Header, Segment, Table, Button } from "semantic-ui-react";
 
 function AdministrarSecciones() {
-    let secciones = [
-        {
-            Codigo: "M01",
-            Nombre: "ALGEBRA I",
-            Creditos: 4,
-            Seccion: 1,
-            Estudiantes: 0,
-        },
-        {
-            Codigo: "M01",
-            Nombre: "ALGEBRA I",
-            Creditos: 4,
-            Seccion: 2,
-            Estudiantes: 0,
-        },
-        {
-            Codigo: "M02",
-            Nombre: "ALGEBRA II",
-            Creditos: 4,
-            Seccion: 1,
-            Estudiantes: 0,
-        },
-        {
-            Codigo: "M03",
-            Nombre: "CALCULO I",
-            Creditos: 5,
-            Seccion: 1,
-            Estudiantes: 1,
-        },
-        {
-            Codigo: "M04",
-            Nombre: "CALCULO II",
-            Creditos: 5,
-            Seccion: 1,
-            Estudiantes: 1,
-        },
-    ];
+    const [secciones, setSecciones] = useState([]);
+    useEffect(() => {
+        fetch('http://localhost:5000/Profesores/Secciones', {
+            method: "POST",
+            body: JSON.stringify({
+                profesor: localStorage.getItem("userUsuario")
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setSecciones(data);
+            })
+            .catch((err) => {
+                console.log(err.message);
+            });
+
+        fetch('http://localhost:5000/Profesores/Secciones', {
+            method: "POST",
+            body: JSON.stringify({
+                profesor: localStorage.getItem("userUsuario")
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setSecciones(data);
+            })
+            .catch((err) => {
+                console.log(err.message);
+            });
+
+    }, []);
+
+    // let secciones = [
+    //     {
+    //         Codigo: "M01",
+    //         Nombre: "ALGEBRA I",
+    //         Creditos: 4,
+    //         Seccion: 1,
+    //         Estudiantes: 0,
+    //     },
+    //     {
+    //         Codigo: "M01",
+    //         Nombre: "ALGEBRA I",
+    //         Creditos: 4,
+    //         Seccion: 2,
+    //         Estudiantes: 0,
+    //     },
+    //     {
+    //         Codigo: "M02",
+    //         Nombre: "ALGEBRA II",
+    //         Creditos: 4,
+    //         Seccion: 1,
+    //         Estudiantes: 0,
+    //     },
+    //     {
+    //         Codigo: "M03",
+    //         Nombre: "CALCULO I",
+    //         Creditos: 5,
+    //         Seccion: 1,
+    //         Estudiantes: 1,
+    //     },
+    //     {
+    //         Codigo: "M04",
+    //         Nombre: "CALCULO II",
+    //         Creditos: 5,
+    //         Seccion: 1,
+    //         Estudiantes: 1,
+    //     },
+    // ];
 
     // Agrupar las asignaturas por Codigo y Nombre
     let asignaturasAgrupadas = secciones.reduce((acumulador, seccion) => {
