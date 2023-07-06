@@ -9,6 +9,7 @@ import {
 } from "semantic-ui-react";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { act } from "react-dom/test-utils";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -34,7 +35,7 @@ function MenuEstudiante() {
             .catch((err) => {
                 console.log(err.message)
             });
-            // Asignaturas
+        // Asignaturas
         fetch('http://localhost:5000/Estudiantes/Asignaturas/Cursando', {
             method: 'POST',
             body: JSON.stringify({
@@ -69,25 +70,54 @@ function MenuEstudiante() {
         ],
     };
 
-    let asignaturas = [
-        {
-            seccion: "IDS325-01",
-            titulo: "Aseguramiento de la Calidad del Software",
-            credito: "4",
-            horario: {
-                lunes: "",
-                martes: "",
-                miercoles: "",
-                jueves: "",
-                viernes: "",
-                sabado: "",
-            },
-            profesor: "Francia Odalis",
-        },
-    ];
-
     const userRol = localStorage.getItem("userRol");
 
+
+    let combinado = {};
+
+    for (let i = 0; i < actuales.length; i++) {
+        let objeto = actuales[i];
+        let Codigo = objeto.Codigo;
+
+        if (!combinado[Codigo]) {
+            combinado[Codigo] = {
+                Codigo: Codigo,
+                Nombre: objeto.Nombre,
+                Creditos: objeto.Creditos,
+                Lunes: objeto.Lunes,
+                Martes: objeto.Martes,
+                Miercoles: objeto.Miercoles,
+                Jueves: objeto.Jueves,
+                Viernes: objeto.Viernes,
+                Sabado: objeto.Sabado,
+            };
+        } else {
+            if (objeto.Lunes) {
+                combinado[Codigo].Lunes = objeto.Lunes;
+            }
+            if (objeto.Martes) {
+                combinado[Codigo].Martes = objeto.Martes;
+            }
+            if (objeto.Miercoles) {
+                combinado[Codigo].Miercoles = objeto.Miercoles;
+            }
+            if (objeto.Jueves) {
+                combinado[Codigo].Jueves = objeto.Jueves;
+            }
+            if (objeto.Viernes) {
+                combinado[Codigo].Viernes = objeto.Viernes;
+            }
+            if (objeto.Sabado) {
+                combinado[Codigo].Sabado = objeto.Sabado;
+            }
+        }
+    }
+    let horariosCombinados = Object.values(combinado);
+
+
+    // function Fecha(hora) {
+    //     return hora.slice(0, 2) + " - " + hora.slice(15, 17);
+    // }
     return (
         <Container>
             <Header as="h1">Bienvenido, @{localStorage.getItem("userUsuario")}</Header>
@@ -180,37 +210,37 @@ function MenuEstudiante() {
                                 </Table.Row>
                             </Table.Header>
                             <Table.Body>
-                                {asignaturas.map((asignatura, index) => (
+                                {horariosCombinados.map((asignatura, index) => (
                                     <Table.Row key={index}>
                                         <Table.Cell>
-                                            {asignatura.seccion}
+                                            {asignatura.Codigo}
                                         </Table.Cell>
                                         <Table.Cell>
-                                            {asignatura.titulo}
+                                            {asignatura.Nombre}
                                         </Table.Cell>
                                         <Table.Cell>
-                                            {asignatura.credito}
+                                            {asignatura.Creditos}
                                         </Table.Cell>
                                         <Table.Cell>
-                                            {asignatura.horario.lunes}
+                                            {asignatura.Lunes}
                                         </Table.Cell>
                                         <Table.Cell>
-                                            {asignatura.horario.martes}
+                                            {asignatura.Martes}
                                         </Table.Cell>
                                         <Table.Cell>
-                                            {asignatura.horario.miercoles}
+                                            {asignatura.Miercoles}
                                         </Table.Cell>
                                         <Table.Cell>
-                                            {asignatura.horario.jueves}
+                                            {asignatura.Jueves}
                                         </Table.Cell>
                                         <Table.Cell>
-                                            {asignatura.horario.viernes}
+                                            {asignatura.Viernes}
                                         </Table.Cell>
                                         <Table.Cell>
-                                            {asignatura.horario.sabado}
+                                            {asignatura.Sabado}
                                         </Table.Cell>
                                         <Table.Cell>
-                                            {asignatura.profesor}
+                                            ""
                                         </Table.Cell>
                                     </Table.Row>
                                 ))}
