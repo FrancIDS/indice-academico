@@ -1,8 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import { Button, Container, Header, Segment, Table } from "semantic-ui-react";
 
+
 function CalificarEstudiantes() {
+    const [asignaturas, setAsignaturas] = useState([]);
+    useEffect(() => {
+        fetch('http://localhost:5000/Profesores/Asignaturas/Estudiantes', {
+            method: 'POST',
+            body: JSON.stringify({
+                profesor: localStorage.getItem("userUsuario"),
+                periodo: "23-01",
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setAsignaturas(data);
+                console.log(asignaturas);
+            })
+            .catch((err) => {
+                console.log(err.message)
+            })
+        // data fetching here
+    }, []);
+
     return (
         <div style={{ background: "#e8f4fc", height: "100vh" }}>
             <Navbar selectedButton={"CalificarEstudiantes"} />
