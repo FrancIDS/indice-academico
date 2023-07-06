@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     Container,
     Divider,
@@ -13,7 +13,49 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 function MenuEstudiante() {
-    const indice = 3.6;
+    const [calculo, setCalculo] = useState([]);
+    const [actuales, setActuales] = useState([]);
+    useEffect(() => {
+        //Indice
+        fetch('http://localhost:5000/Informacion/Indice/Calcular', {
+            method: 'POST',
+            body: JSON.stringify({
+                estudiante: localStorage.getItem("userUsuario"),
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setCalculo(data[0])
+                console.log(data[0]);
+            })
+            .catch((err) => {
+                console.log(err.message)
+            });
+            // Asignaturas
+        fetch('http://localhost:5000/Estudiantes/Asignaturas/Cursando', {
+            method: 'POST',
+            body: JSON.stringify({
+                estudiante: localStorage.getItem("userUsuario"),
+                periodo: "23-01"
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setActuales(data);
+                console.log(data);
+            })
+            .catch((err) => {
+                console.log(err.message)
+            });
+    }, []);
+    const indice = calculo.Indice;
+
     const indiceAcademico = {
         labels: "",
         datasets: [
@@ -48,7 +90,7 @@ function MenuEstudiante() {
 
     return (
         <Container>
-            <Header as="h1">Bienvenido, @Joselito</Header>
+            <Header as="h1">Bienvenido, @{localStorage.getItem("userUsuario")}</Header>
 
             <Segment color="blue" padded>
                 <Grid columns={2} centered verticalAlign="middle">
@@ -73,32 +115,32 @@ function MenuEstudiante() {
                                     <Table.Cell>
                                         <strong>Rol</strong>
                                     </Table.Cell>
-                                    <Table.Cell>{userRol}</Table.Cell>
+                                    <Table.Cell>{localStorage.getItem("userRol")}</Table.Cell>
                                 </Table.Row>
                                 <Table.Row>
                                     <Table.Cell>
                                         <strong>Nombre</strong>
                                     </Table.Cell>
-                                    <Table.Cell>José</Table.Cell>
+                                    <Table.Cell>{localStorage.getItem("userNombre")}</Table.Cell>
                                 </Table.Row>
                                 <Table.Row>
                                     <Table.Cell>
                                         <strong>Apellido</strong>
                                     </Table.Cell>
-                                    <Table.Cell>Durán</Table.Cell>
+                                    <Table.Cell>{localStorage.getItem("userApellido")}</Table.Cell>
                                 </Table.Row>
                                 <Table.Row>
                                     <Table.Cell>
                                         <strong>Carrera</strong>
                                     </Table.Cell>
-                                    <Table.Cell>Ingeniería</Table.Cell>
+                                    <Table.Cell>{localStorage.getItem("userCarrera")}</Table.Cell>
                                 </Table.Row>
                                 <Table.Row>
                                     <Table.Cell>
                                         <strong>Correo</strong>
                                     </Table.Cell>
                                     <Table.Cell>
-                                        joselito02@gmail.com
+                                        {localStorage.getItem("userCorreo")}
                                     </Table.Cell>
                                 </Table.Row>
                             </Table.Body>
