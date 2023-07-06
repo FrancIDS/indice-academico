@@ -125,13 +125,13 @@ function UsuarioEditar({ isOpen, closeModal }) {
         optionsPreguntas.push({ text: x.Pregunta, value: x.ID });
     })
     return (
-        <Modal size="large" open={isOpen} onClose={closeModal}>
+        <Modal size="small" open={isOpen} onClose={closeModal}>
             <Modal.Header as="h2">Editar usuario</Modal.Header>
             <Modal.Content>
                 <div style={{ padding: "20px" }}>
                     <Form onSubmit={handleSubmit}>
-                        <Grid columns={2}>
-                            <Grid.Column>
+                        {/* <Grid columns={2}>
+                            <Grid.Column> */}
                                 <Form.Group widths="equal">
                                     <Form.Input
                                         disabled
@@ -189,7 +189,7 @@ function UsuarioEditar({ isOpen, closeModal }) {
                                         value={selectedCarrera}
                                     />
                                 </Form.Group>
-                            </Grid.Column>
+                            {/* </Grid.Column>
                             <Grid.Column>
                                 <Form.Select
                                     fluid
@@ -237,7 +237,7 @@ function UsuarioEditar({ isOpen, closeModal }) {
                                     onChange={handleRespuesta3Change}
                                 />
                             </Grid.Column>
-                        </Grid>
+                        </Grid> */}
 
                         {/* <Divider hidden /> */}
                         <Button primary fluid type="submit">
