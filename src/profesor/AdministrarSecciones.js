@@ -21,24 +21,6 @@ function AdministrarSecciones() {
             .catch((err) => {
                 console.log(err.message);
             });
-
-        fetch('http://localhost:5000/Profesores/Secciones', {
-            method: "POST",
-            body: JSON.stringify({
-                profesor: localStorage.getItem("userUsuario")
-            }),
-            headers: {
-                "Content-type": "application/json; charset=UTF-8",
-            },
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                setSecciones(data);
-            })
-            .catch((err) => {
-                console.log(err.message);
-            });
-
     }, []);
 
     // let secciones = [
