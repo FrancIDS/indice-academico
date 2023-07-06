@@ -9,7 +9,6 @@ import {
 } from "semantic-ui-react";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { act } from "react-dom/test-utils";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -18,32 +17,32 @@ function MenuEstudiante() {
     const [actuales, setActuales] = useState([]);
     useEffect(() => {
         //Indice
-        fetch('http://localhost:5000/Informacion/Indice/Calcular', {
-            method: 'POST',
+        fetch("http://localhost:5000/Informacion/Indice/Calcular", {
+            method: "POST",
             body: JSON.stringify({
                 estudiante: localStorage.getItem("userUsuario"),
             }),
             headers: {
-                'Content-type': 'application/json; charset=UTF-8',
+                "Content-type": "application/json; charset=UTF-8",
             },
         })
             .then((response) => response.json())
             .then((data) => {
-                setCalculo(data[0])
+                setCalculo(data[0]);
                 console.log(data[0]);
             })
             .catch((err) => {
-                console.log(err.message)
+                console.log(err.message);
             });
         // Asignaturas
-        fetch('http://localhost:5000/Estudiantes/Asignaturas/Cursando', {
-            method: 'POST',
+        fetch("http://localhost:5000/Estudiantes/Asignaturas/Cursando", {
+            method: "POST",
             body: JSON.stringify({
                 estudiante: localStorage.getItem("userUsuario"),
-                periodo: "23-01"
+                periodo: "23-01",
             }),
             headers: {
-                'Content-type': 'application/json; charset=UTF-8',
+                "Content-type": "application/json; charset=UTF-8",
             },
         })
             .then((response) => response.json())
@@ -52,7 +51,7 @@ function MenuEstudiante() {
                 console.log(data);
             })
             .catch((err) => {
-                console.log(err.message)
+                console.log(err.message);
             });
     }, []);
     const indice = calculo.Indice;
@@ -69,9 +68,6 @@ function MenuEstudiante() {
             },
         ],
     };
-
-    const userRol = localStorage.getItem("userRol");
-
 
     let combinado = {};
 
@@ -113,14 +109,20 @@ function MenuEstudiante() {
         }
     }
     let horariosCombinados = Object.values(combinado);
+    console.log(horariosCombinados);
 
+    const reformatHorario = (dia) => {
+        let horas = dia.split(" - ");
+        let inicio = horas[0].split(":")[0];
+        let fin = horas[1].split(":")[0];
+        return inicio + " - " + fin;
+    };
 
-    // function Fecha(hora) {
-    //     return hora.slice(0, 2) + " - " + hora.slice(15, 17);
-    // }
     return (
         <Container>
-            <Header as="h1">Bienvenido, @{localStorage.getItem("userUsuario")}</Header>
+            <Header as="h1">
+                Bienvenido, @{localStorage.getItem("userUsuario")}
+            </Header>
 
             <Segment color="blue" padded>
                 <Grid columns={2} centered verticalAlign="middle">
@@ -138,32 +140,42 @@ function MenuEstudiante() {
                         <Pie data={indiceAcademico} />
                     </Grid.Column>
                     <Grid.Column style={{ margin: "20px" }}>
-                        <Header as="h2" textAlign="center">Datos generales</Header>
+                        <Header as="h2" textAlign="center">
+                            Datos generales
+                        </Header>
                         <Table celled color="blue" verticalAlign="middle">
                             <Table.Body>
                                 <Table.Row>
                                     <Table.Cell>
                                         <strong>Rol</strong>
                                     </Table.Cell>
-                                    <Table.Cell>{localStorage.getItem("userRol")}</Table.Cell>
+                                    <Table.Cell>
+                                        {localStorage.getItem("userRol")}
+                                    </Table.Cell>
                                 </Table.Row>
                                 <Table.Row>
                                     <Table.Cell>
                                         <strong>Nombre</strong>
                                     </Table.Cell>
-                                    <Table.Cell>{localStorage.getItem("userNombre")}</Table.Cell>
+                                    <Table.Cell>
+                                        {localStorage.getItem("userNombre")}
+                                    </Table.Cell>
                                 </Table.Row>
                                 <Table.Row>
                                     <Table.Cell>
                                         <strong>Apellido</strong>
                                     </Table.Cell>
-                                    <Table.Cell>{localStorage.getItem("userApellido")}</Table.Cell>
+                                    <Table.Cell>
+                                        {localStorage.getItem("userApellido")}
+                                    </Table.Cell>
                                 </Table.Row>
                                 <Table.Row>
                                     <Table.Cell>
                                         <strong>Carrera</strong>
                                     </Table.Cell>
-                                    <Table.Cell>{localStorage.getItem("userCarrera")}</Table.Cell>
+                                    <Table.Cell>
+                                        {localStorage.getItem("userCarrera")}
+                                    </Table.Cell>
                                 </Table.Row>
                                 <Table.Row>
                                     <Table.Cell>
@@ -222,26 +234,24 @@ function MenuEstudiante() {
                                             {asignatura.Creditos}
                                         </Table.Cell>
                                         <Table.Cell>
-                                            {asignatura.Lunes}
+                                            {(asignatura.Lunes) ? reformatHorario(asignatura.Lunes) : asignatura.Lunes}
                                         </Table.Cell>
                                         <Table.Cell>
-                                            {asignatura.Martes}
+                                        {(asignatura.Martes) ? reformatHorario(asignatura.Martes) : asignatura.Martes}
                                         </Table.Cell>
                                         <Table.Cell>
-                                            {asignatura.Miercoles}
+                                        {(asignatura.Miercoles) ? reformatHorario(asignatura.Miercoles) : asignatura.Miercoles}
                                         </Table.Cell>
                                         <Table.Cell>
-                                            {asignatura.Jueves}
+                                        {(asignatura.Jueves) ? reformatHorario(asignatura.Jueves) : asignatura.Jueves}
                                         </Table.Cell>
                                         <Table.Cell>
-                                            {asignatura.Viernes}
+                                        {(asignatura.Viernes) ? reformatHorario(asignatura.Viernes) : asignatura.Viernes}
                                         </Table.Cell>
                                         <Table.Cell>
-                                            {asignatura.Sabado}
+                                        {(asignatura.Sabado) ? reformatHorario(asignatura.Sabado) : asignatura.Sabado}
                                         </Table.Cell>
-                                        <Table.Cell>
-                                            ""
-                                        </Table.Cell>
+                                        <Table.Cell>""</Table.Cell>
                                     </Table.Row>
                                 ))}
                             </Table.Body>

@@ -37,6 +37,7 @@ const AuthProvider = ({ children }) => {
             .then((data) => {
                 setSession(data[0]);
                 console.log(data[0]);
+                console.log(session);
                 if (data.length > 0) {
                     console.log("Entre :D");
                     setIsLoggedIn(true);
