@@ -20,6 +20,7 @@ function UsuarioEditar({ isOpen, closeModal }) {
             })
                 .then((response) => response.json())
                 .then((data) => {
+                    window.location.reload();
                     closeModal();
                 })
                 .catch((err) => {
@@ -41,6 +42,7 @@ function UsuarioEditar({ isOpen, closeModal }) {
             })
                 .then((response) => response.json())
                 .then((data) => {
+                    window.location.reload();
                     closeModal();
                 })
                 .catch((err) => {
@@ -62,6 +64,7 @@ function UsuarioEditar({ isOpen, closeModal }) {
             })
                 .then((response) => response.json())
                 .then((data) => {
+                    window.location.reload();
                     closeModal();
                 })
                 .catch((err) => {

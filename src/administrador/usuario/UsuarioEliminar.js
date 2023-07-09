@@ -5,7 +5,37 @@ function UsuarioEliminar({ isOpen, closeModal }) {
     const [usuarioEliminar, setUsuarioEliminar] = useState();
     const handleUsuarioEliminar = (e, { value }) => setUsuarioEliminar(value);
 
-    const handleSubmit = () => {};
+    const handleSubmit = () => {
+        fetch("http://localhost:5000/Usuarios/Eliminar/Pregunta", {
+            method: 'DELETE',
+            body: JSON.stringify({
+                usuario: localStorage.getItem("usuario"),
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+            })
+            .catch((err) => { console.log(err.message); });
+
+        fetch("http://localhost:5000/Usuarios/Eliminar", {
+            method: 'DELETE',
+            body: JSON.stringify({
+                usuario: localStorage.getItem("usuario"),
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                window.location.reload();
+                closeModal();
+            })
+            .catch((err) => { console.log(err.message); });
+    };
 
     return (
         <Modal size="tiny" open={isOpen} onClose={closeModal}>
