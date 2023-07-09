@@ -12,7 +12,7 @@ const AsignaturasTable = ({ asignaturas }) => {
     const openEliminarAsignatura = () => setIsModalOpenEliminar(true);
     const closeEliminarAsignatura = () => {
         setIsModalOpenEliminar(false);
-        localStorage.removeItem("usuario");
+        localStorage.removeItem("asignatura");
     };
 
     return (
@@ -44,11 +44,8 @@ const AsignaturasTable = ({ asignaturas }) => {
                                 <Button
                                     primary
                                     onClick={() => {
-                                        localStorage.setItem(
-                                            "asignatura",
-                                            asignatura.Codigo
-                                        );
                                         openEliminarAsignatura();
+                                        localStorage.setItem("asignatura", asignatura.Codigo);
                                     }}
                                     content="Eliminar"
                                     size="compact"

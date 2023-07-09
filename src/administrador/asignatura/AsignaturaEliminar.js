@@ -5,7 +5,73 @@ function AsignaturaEliminar({ isOpen, closeModal }) {
     const [asignaturaEliminar, setAsignaturaEliminar] = useState();
     const handleAsignaturaEliminar = (e, { value }) => setAsignaturaEliminar(value);
 
-    const handleSubmit = () => {};
+    const handleSubmit = () => {
+        fetch("http://localhost:5000/Asignaturas/Eliminar/Horario", {
+            method: 'delete',
+            body: JSON.stringify({
+                codigo: localStorage.getItem("asignatura"),
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+            })
+            .catch((err) => {
+                console.log(err.message);
+            });
+
+        fetch("http://localhost:5000/Asignaturas/Eliminar/Seccion", {
+            method: 'delete',
+            body: JSON.stringify({
+                codigo: localStorage.getItem("asignatura"),
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                window.location.reload();
+                closeModal();
+            })
+            .catch((err) => {
+            });
+
+        fetch("http://localhost:5000/Asignaturas/Eliminar/Profesor", {
+            method: 'delete',
+            body: JSON.stringify({
+                codigo: localStorage.getItem("asignatura"),
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+            })
+            .catch((err) => {
+                console.log(err.message);
+            });
+
+        fetch("http://localhost:5000/Asignaturas/Eliminar", {
+            method: 'delete',
+            body: JSON.stringify({
+                codigo: localStorage.getItem("asignatura"),
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                closeModal();
+            })
+            .catch((err) => {
+                console.log(err.message);
+            });
+    };
 
     return (
         <Modal size="tiny" open={isOpen} onClose={closeModal}>
