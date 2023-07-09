@@ -1,12 +1,13 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Table, Button } from "semantic-ui-react";
 import UsuarioEditar from "./UsuarioEditar";
+import UsuarioEliminar from "./UsuarioEliminar";
 
 const UsuariosTable = ({ usuarios }) => {
     const [preguntas, setPreguntas] = useState([]);
 
     const [isModalOpenEditar, setIsModalOpenEditar] = useState(false);
-    const openEditarUsuario = (usuario) => setIsModalOpenEditar(true);
+    const openEditarUsuario = () => setIsModalOpenEditar(true);
     const closeEditarUsuario = () => {
         setIsModalOpenEditar(false);
         localStorage.removeItem("usuario");
@@ -18,8 +19,11 @@ const UsuariosTable = ({ usuarios }) => {
         localStorage.removeItem("carrera");
     };
 
-    const handleEliminar = (usuario) => {
-        console.log("Eliminar usuario:", usuario);
+    const [isModalOpenEliminar, setIsModalOpenEliminar] = useState(false);
+    const openEliminarUsuario = () => setIsModalOpenEliminar(true);
+    const closeEliminarUsuario = () => {
+        setIsModalOpenEliminar(false);
+        localStorage.removeItem("usuario");
     };
 
     return (
@@ -71,7 +75,10 @@ const UsuariosTable = ({ usuarios }) => {
                                 />
                                 <Button
                                     primary
-                                    onClick={() => handleEliminar(usuario)}
+                                    onClick={() => {
+                                        localStorage.setItem("usuario", usuario.Usuario);
+                                        openEliminarUsuario();
+                                    }}
                                     content="Eliminar"
                                     size="compact"
                                 />
@@ -85,6 +92,7 @@ const UsuariosTable = ({ usuarios }) => {
                 isOpen={isModalOpenEditar}
                 closeModal={closeEditarUsuario}
             />
+            <UsuarioEliminar isOpen={isModalOpenEliminar} closeModal={closeEliminarUsuario} />
         </>
     );
 };
