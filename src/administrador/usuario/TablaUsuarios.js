@@ -74,6 +74,7 @@ const UsuariosTable = ({ usuarios }) => {
 
                                 />
                                 <Button
+                                    disabled={usuario.Usuario == localStorage.getItem("userUsuario")}
                                     primary
                                     onClick={() => {
                                         localStorage.setItem("usuario", usuario.Usuario);
@@ -104,7 +105,7 @@ function TablaUsuarios() {
             .then((response) => response.json())
             .then((data) => {
                 setUsuarios(data);
-                console.log(usuarios);
+                console.log(data);
             })
             .catch((err) => {
                 console.log(err.message);
