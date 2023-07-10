@@ -3,6 +3,11 @@ import { Form, Button, Modal, Grid } from "semantic-ui-react";
 
 function UsuarioCrear({ isOpen, closeModal }) {
     const handleSubmit = (e) => {
+        console.log(selectedRol);
+        console.log(selectedPregunta1);
+        console.log(selectedPregunta2);
+        console.log(selectedPregunta3);
+        console.log(usuario);
         if (selectedRol === 1) { //Administrador
             fetch("http://localhost:5000/Profesores/Insertar", {
                 method: 'POST',
@@ -20,7 +25,6 @@ function UsuarioCrear({ isOpen, closeModal }) {
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    closeModal();
                 })
                 .catch((err) => {
                     console.log(err.message);
@@ -42,7 +46,6 @@ function UsuarioCrear({ isOpen, closeModal }) {
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    closeModal();
                 })
                 .catch((err) => {
                     console.log(err.message);
@@ -65,47 +68,22 @@ function UsuarioCrear({ isOpen, closeModal }) {
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    closeModal();
                 })
                 .catch((err) => {
                     console.log(err.message);
                 });
         }
-        fetch("http://localhost:5000/Usuarios/Pregunta/Insertar", {
-            method: 'POST',
-            body: JSON.stringify({
-                preguntaID: selectedPregunta1,
-                usuario: usuario,
-                respuesta: respuesta1,
-            }), headers: { 'Content-type': 'application/json; charset=UTF-8', },
-        })
-            .then((response) => response.json())
-            .then((data) => { })
-            .catch((err) => { console.log(err.message); });
 
+        setTimeout(1000);
         fetch("http://localhost:5000/Usuarios/Pregunta/Insertar", {
-            method: 'POST',
-            body: JSON.stringify({
-                preguntaID: selectedPregunta2,
-                usuario: usuario,
-                respuesta: respuesta2,
-            }),
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8',
-            },
-        })
-            .then((response) => response.json())
-            .then((data) => { })
-            .catch((err) => { console.log(err.message); });
-
-        fetch("http://localhost:5000/Usuarios/Pregunta/Insertar", {
-            method: 'POST',
-            body: JSON.stringify({
-                preguntaID: selectedPregunta3,
-                usuario: usuario,
-                respuesta: respuesta3,
-            }),
-            headers: {
+            method: 'post',
+            body: JSON.stringify(
+                {
+                    preguntaID: selectedPregunta1,
+                    usuario: usuario,
+                    respuesta: respuesta1,
+                }), headers:
+            {
                 'Content-type': 'application/json; charset=UTF-8',
             },
         })
@@ -114,6 +92,42 @@ function UsuarioCrear({ isOpen, closeModal }) {
             })
             .catch((err) => { console.log(err.message); });
 
+        fetch("http://localhost:5000/Usuarios/Pregunta/Insertar", {
+            method: 'post',
+            body: JSON.stringify(
+                {
+                    preguntaID: selectedPregunta2,
+                    usuario: usuario,
+                    respuesta: respuesta2,
+                }), headers:
+            {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+            })
+            .catch((err) => { console.log(err.message); });
+
+        fetch("http://localhost:5000/Usuarios/Pregunta/Insertar", {
+            method: 'post',
+            body: JSON.stringify(
+                {
+                    preguntaID: selectedPregunta3,
+                    usuario: usuario,
+                    respuesta: respuesta3,
+                }), headers:
+            {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                window.location.reload();
+                closeModal();
+            })
+            .catch((err) => { console.log(err.message); });
         setNombre("");
         setUsuario("");
         setApellido("");
@@ -162,7 +176,20 @@ function UsuarioCrear({ isOpen, closeModal }) {
                 console.log(err.message);
             });
         // data fetching here
-    }, []);
+        setNombre("");
+        setUsuario("");
+        setApellido("");
+        setCorreo("");
+        setPassword("");
+        setSelectedRol("");
+        setSelectedCarrera("");
+        setRespuesta1("");
+        setRespuesta2("");
+        setRespuesta3("");
+        setSelectedPregunta1("");
+        setSelectedPregunta2("");
+        setSelectedPregunta3("");
+    }, [""]);
 
     const [usuario, setUsuario] = useState("");
     const [password, setPassword] = useState("");
@@ -274,6 +301,9 @@ function UsuarioCrear({ isOpen, closeModal }) {
                                         onChange={handleRolChange}
                                     />
                                     <Form.Select
+                                        disabled={
+                                            selectedRol != 3
+                                        }
                                         width={5}
                                         label="Carrera"
                                         placeholder="Carrera"

@@ -99,7 +99,7 @@ function UsuarioEditar({ isOpen, closeModal }) {
     const handleCorreoChange = (e, { value }) => setCorreo(value);
 
     useEffect(() => {
-        
+
         setUsuario(localStorage.getItem("usuario"));
         setNombre(localStorage.getItem("nombre"));
         setApellido(localStorage.getItem("apellido"));
@@ -120,8 +120,8 @@ function UsuarioEditar({ isOpen, closeModal }) {
             .catch((err) => {
                 console.log(err.message);
             });
-    }, [localStorage.getItem("nombre"), localStorage.getItem("apellido"), localStorage.getItem("correo"), 
-    localStorage.getItem("contrasena"), localStorage.getItem("rol"), localStorage.getItem("carrera"),localStorage.getItem("pregunta")])
+    }, [localStorage.getItem("nombre"), localStorage.getItem("apellido"), localStorage.getItem("correo"),
+    localStorage.getItem("contrasena"), localStorage.getItem("rol"), localStorage.getItem("carrera"), localStorage.getItem("pregunta")])
 
     const optionsPreguntas = [];
     preguntas.map((x) => {
@@ -135,64 +135,67 @@ function UsuarioEditar({ isOpen, closeModal }) {
                     <Form onSubmit={handleSubmit}>
                         {/* <Grid columns={2}>
                             <Grid.Column> */}
-                                <Form.Group widths="equal">
-                                    <Form.Input
-                                        disabled
-                                        width={5}
-                                        label="Usuario"
-                                        placeholder="Usuario"
-                                        value={usuario}
-                                    />
-                                    <Form.Input
-                                        width={5}
-                                        label="Contraseña"
-                                        placeholder="Contraseña"
-                                        value={password}
-                                        onChange={handlePasswordChange}
-                                        type="password"
-                                    />
-                                </Form.Group>
-                                <Form.Group widths="equal">
-                                    <Form.Input
+                        <Form.Group widths="equal">
+                            <Form.Input
+                                disabled
+                                width={5}
+                                label="Usuario"
+                                placeholder="Usuario"
+                                value={usuario}
+                            />
+                            <Form.Input
+                                width={5}
+                                label="Contraseña"
+                                placeholder="Contraseña"
+                                value={password}
+                                onChange={handlePasswordChange}
+                                type="password"
+                            />
+                        </Form.Group>
+                        <Form.Group widths="equal">
+                            <Form.Input
 
-                                        width={5}
-                                        label="Nombre"
-                                        placeholder="Nombre"
-                                        value={nombre}
-                                        onChange={handleNombreChange}
-                                    />
-                                    <Form.Input
-                                        width={5}
-                                        label="Apellido"
-                                        placeholder="Apellido"
-                                        value={apellido}
-                                        onChange={handleApellidoChange}
-                                    />
-                                </Form.Group>
-                                <Form.Group widths="equal">
-                                    <Form.Input
-                                        label="Correo"
-                                        placeholder="Correo"
-                                        value={correo}
-                                        onChange={handleCorreoChange}
-                                        type="email"
-                                    />
-                                </Form.Group>
-                                <Form.Group widths="equal">
-                                    <Form.Select
-                                        width={5}
-                                        label="Rol"
-                                        placeholder={selectedRol}
-                                        value={selectedRol}
-                                    />
-                                    <Form.Select
-                                        width={5}
-                                        label="Carrera"
-                                        placeholder={selectedCarrera}
-                                        value={selectedCarrera}
-                                    />
-                                </Form.Group>
-                            {/* </Grid.Column>
+                                width={5}
+                                label="Nombre"
+                                placeholder="Nombre"
+                                value={nombre}
+                                onChange={handleNombreChange}
+                            />
+                            <Form.Input
+                                width={5}
+                                label="Apellido"
+                                placeholder="Apellido"
+                                value={apellido}
+                                onChange={handleApellidoChange}
+                            />
+                        </Form.Group>
+                        <Form.Group widths="equal">
+                            <Form.Input
+                                label="Correo"
+                                placeholder="Correo"
+                                value={correo}
+                                onChange={handleCorreoChange}
+                                type="email"
+                            />
+                        </Form.Group>
+                        <Form.Group widths="equal">
+                            <Form.Select
+                                disabled={
+                                    selectedRol != "Estudiante"
+                                }
+                                width={5}
+                                label="Rol"
+                                placeholder={selectedRol}
+                                value={selectedRol}
+                            />
+                            <Form.Select
+                                width={5}
+                                label="Carrera"
+                                placeholder={selectedCarrera}
+                                value={selectedCarrera}
+                            />
+                        </Form.Group>
+                        {/* </Grid.Column>
                             <Grid.Column>
                                 <Form.Select
                                     fluid
