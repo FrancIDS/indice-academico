@@ -10,11 +10,6 @@ const AuthProvider = ({ children }) => {
 
     useEffect(() => {
 
-
-
-
-
-
         // const storedAuth = localStorage.getItem("isLoggedIn");
 
         // if (storedAuth) {
@@ -50,6 +45,8 @@ const AuthProvider = ({ children }) => {
                     localStorage.setItem("userPassword", data[0].Contrasena);
                     localStorage.setItem("userRol", data[0].Rol);
                     navigate("/Menu");
+                }else{
+                    alert("Combinacion de credenciales incorrecta!");
                 }
             })
             .catch((err) => {

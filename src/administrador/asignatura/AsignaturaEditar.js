@@ -2,7 +2,36 @@ import React, { useEffect, useState } from "react";
 import { Form, Modal, Button } from "semantic-ui-react";
 
 function AsignaturaEditar({ isOpen, closeModal }) {
-    const handleSubmit = (e) => {};
+    const handleSubmit = (e) => {
+        if (isNaN(credito)) {
+            alert('Escribe un numero en el campo "Creditos"');
+        }
+        else if ((codigo === "") || (titulo === "") || (credito === "") || (selectedArea === "")) {
+            alert('No dejes campos vacios!');
+        }
+        else{
+            fetch("http://localhost:5000/Asignaturas/Modificar", {
+                method: 'PATCH',
+                body: JSON.stringify({
+                    codigo: codigo,
+                    nombre: titulo.toUpperCase(),
+                    credito: credito,
+                    area: selectedArea,
+                }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    window.location.reload();
+                    closeModal();
+                })
+                .catch((err) => {
+                    console.log(err.message);
+                });
+        }
+    };
 
     const [codigo, setCodigo] = useState("");
     const [credito, setCredito] = useState("");

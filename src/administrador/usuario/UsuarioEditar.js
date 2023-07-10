@@ -4,73 +4,80 @@ import { Form, Modal, Grid, Button } from "semantic-ui-react";
 function UsuarioEditar({ isOpen, closeModal }) {
 
     const handleSubmit = (e) => {
-        if (selectedRol === 'Administrador') { //Administrador
-            fetch("http://localhost:5000/Profesores/Actualizar", {
-                method: 'PATCH',
-                body: JSON.stringify({
-                    nombre: nombre,
-                    usuario: usuario,
-                    apellido: apellido,
-                    correo: correo,
-                    contrasena: password,
-                }),
-                headers: {
-                    'Content-type': 'application/json; charset=UTF-8',
-                },
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    window.location.reload();
-                    closeModal();
-                })
-                .catch((err) => {
-                    console.log(err.message);
-                });
-        } else if (selectedRol === 'Profesor') {//Profesor
-            fetch("http://localhost:5000/Profesores/Actualizar", {
-                method: 'PATCH',
-                body: JSON.stringify({
-                    nombre: nombre,
-                    usuario: usuario,
-                    apellido: apellido,
-                    correo: correo,
-                    contrasena: password,
-                }),
-                headers: {
-                    'Content-type': 'application/json; charset=UTF-8',
-                },
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    window.location.reload();
-                    closeModal();
-                })
-                .catch((err) => {
-                    console.log(err.message);
-                });
-        } else { //Estudiante
-            fetch("http://localhost:5000/Estudiantes/Actualizar", {
-                method: 'PATCH',
-                body: JSON.stringify({
-                    nombre: nombre,
-                    usuario: usuario,
-                    apellido: apellido,
-                    correo: correo,
-                    contrasena: password,
-                }),
-                headers: {
-                    'Content-type': 'application/json; charset=UTF-8',
-                },
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    window.location.reload();
-                    closeModal();
-                })
-                .catch((err) => {
-                    console.log(err.message);
-                });
+        
+        if ((nombre === "") || (usuario === "") || (apellido === "") || (correo === "") || (password === "") || (selectedRol === "")) {
+            alert("No dejes campos vacios!");
         }
+        else {
+            if (selectedRol === 'Administrador') { //Administrador
+                fetch("http://localhost:5000/Profesores/Actualizar", {
+                    method: 'PATCH',
+                    body: JSON.stringify({
+                        nombre: nombre,
+                        usuario: usuario,
+                        apellido: apellido,
+                        correo: correo,
+                        contrasena: password,
+                    }),
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8',
+                    },
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        window.location.reload();
+                        closeModal();
+                    })
+                    .catch((err) => {
+                        console.log(err.message);
+                    });
+            } else if (selectedRol === 'Profesor') {//Profesor
+                fetch("http://localhost:5000/Profesores/Actualizar", {
+                    method: 'PATCH',
+                    body: JSON.stringify({
+                        nombre: nombre,
+                        usuario: usuario,
+                        apellido: apellido,
+                        correo: correo,
+                        contrasena: password,
+                    }),
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8',
+                    },
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        window.location.reload();
+                        closeModal();
+                    })
+                    .catch((err) => {
+                        console.log(err.message);
+                    });
+            } else { //Estudiante
+                fetch("http://localhost:5000/Estudiantes/Actualizar", {
+                    method: 'PATCH',
+                    body: JSON.stringify({
+                        nombre: nombre,
+                        usuario: usuario,
+                        apellido: apellido,
+                        correo: correo,
+                        contrasena: password,
+                    }),
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8',
+                    },
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        window.location.reload();
+                        closeModal();
+                    })
+                    .catch((err) => {
+                        console.log(err.message);
+                    });
+            }
+        }
+
     };
     const [usuario, setUsuario] = useState("");
     const [password, setPassword] = useState("");

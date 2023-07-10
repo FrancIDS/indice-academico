@@ -3,144 +3,155 @@ import { Form, Button, Modal, Grid } from "semantic-ui-react";
 
 function UsuarioCrear({ isOpen, closeModal }) {
     const handleSubmit = (e) => {
-        console.log(selectedRol);
-        console.log(selectedPregunta1);
-        console.log(selectedPregunta2);
-        console.log(selectedPregunta3);
-        console.log(usuario);
-        if (selectedRol === 1) { //Administrador
-            fetch("http://localhost:5000/Profesores/Insertar", {
-                method: 'POST',
-                body: JSON.stringify({
-                    nombre: nombre,
-                    usuario: usuario,
-                    apellido: apellido,
-                    correo: correo,
-                    contrasena: password,
-                    rolID: selectedRol,
-                }),
-                headers: {
+        let error = false;
+        if ((nombre === "") || (usuario === "") || (apellido === "") || (correo === "") || (password === "") || (selectedRol === "")
+            || (selectedPregunta1 === "") || (selectedPregunta2 === "") || (selectedPregunta3 === "") || (respuesta1 === "") || (respuesta2 == "")
+            || (respuesta3 === "")) {
+            alert('No dejes campos vacios!');
+            error = true;
+        } else if (selectedRol === 3 && selectedCarrera === "") {
+            alert('No dejes campos vacios!')
+        }
+        else if ((selectedPregunta1 === selectedPregunta2) ||(selectedPregunta1 === selectedPregunta3) || (selectedPregunta2 === selectedPregunta3)){
+            alert('Elige preguntas diferentes!')
+        }
+        else {
+            if (selectedRol === 1) { //Administrador
+                fetch("http://localhost:5000/Profesores/Insertar", {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        nombre: nombre,
+                        usuario: usuario,
+                        apellido: apellido,
+                        correo: correo,
+                        contrasena: password,
+                        rolID: selectedRol,
+                    }),
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8',
+                    },
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                    })
+                    .catch((err) => {
+                        console.log(err.message);
+                    });
+            } else if (selectedRol === 2) {//Profesor
+                fetch("http://localhost:5000/Profesores/Insertar", {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        nombre: nombre,
+                        usuario: usuario,
+                        apellido: apellido,
+                        correo: correo,
+                        contrasena: password,
+                        rolID: selectedRol,
+                    }),
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8',
+                    },
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                    })
+                    .catch((err) => {
+                        console.log(err.message);
+                    });
+            } else { //Estudiante
+                fetch("http://localhost:5000/Estudiantes/Insertar", {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        nombre: nombre,
+                        usuario: usuario,
+                        apellido: apellido,
+                        correo: correo,
+                        contrasena: password,
+                        rolID: selectedRol,
+                        carreraID: selectedCarrera,
+                    }),
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8',
+                    },
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                    })
+                    .catch((err) => {
+                        console.log(err.message);
+                    });
+            }
+
+            setTimeout(1000);
+            fetch("http://localhost:5000/Usuarios/Pregunta/Insertar", {
+                method: 'post',
+                body: JSON.stringify(
+                    {
+                        preguntaID: selectedPregunta1,
+                        usuario: usuario,
+                        respuesta: respuesta1,
+                    }), headers:
+                {
                     'Content-type': 'application/json; charset=UTF-8',
                 },
             })
                 .then((response) => response.json())
                 .then((data) => {
                 })
-                .catch((err) => {
-                    console.log(err.message);
-                });
-        } else if (selectedRol === 2) {//Profesor
-            fetch("http://localhost:5000/Profesores/Insertar", {
-                method: 'POST',
-                body: JSON.stringify({
-                    nombre: nombre,
-                    usuario: usuario,
-                    apellido: apellido,
-                    correo: correo,
-                    contrasena: password,
-                    rolID: selectedRol,
-                }),
-                headers: {
+                .catch((err) => { console.log(err.message); });
+
+            fetch("http://localhost:5000/Usuarios/Pregunta/Insertar", {
+                method: 'post',
+                body: JSON.stringify(
+                    {
+                        preguntaID: selectedPregunta2,
+                        usuario: usuario,
+                        respuesta: respuesta2,
+                    }), headers:
+                {
                     'Content-type': 'application/json; charset=UTF-8',
                 },
             })
                 .then((response) => response.json())
                 .then((data) => {
                 })
-                .catch((err) => {
-                    console.log(err.message);
-                });
-        } else { //Estudiante
-            fetch("http://localhost:5000/Estudiantes/Insertar", {
-                method: 'POST',
-                body: JSON.stringify({
-                    nombre: nombre,
-                    usuario: usuario,
-                    apellido: apellido,
-                    correo: correo,
-                    contrasena: password,
-                    rolID: selectedRol,
-                    carreraID: selectedCarrera,
-                }),
-                headers: {
+                .catch((err) => { console.log(err.message); });
+
+            fetch("http://localhost:5000/Usuarios/Pregunta/Insertar", {
+                method: 'post',
+                body: JSON.stringify(
+                    {
+                        preguntaID: selectedPregunta3,
+                        usuario: usuario,
+                        respuesta: respuesta3,
+                    }), headers:
+                {
                     'Content-type': 'application/json; charset=UTF-8',
                 },
             })
                 .then((response) => response.json())
                 .then((data) => {
+                    console.log(data);
+                    window.location.reload();
+                    closeModal();
                 })
-                .catch((err) => {
-                    console.log(err.message);
-                });
+                .catch((err) => { console.log(err.message); });
+
+            setNombre("");
+            setUsuario("");
+            setApellido("");
+            setCorreo("");
+            setPassword("");
+            setSelectedRol("");
+            setSelectedCarrera("");
+            setRespuesta1("");
+            setRespuesta2("");
+            setRespuesta3("");
+            setSelectedPregunta1("");
+            setSelectedPregunta2("");
+            setSelectedPregunta3("");
         }
 
-        setTimeout(1000);
-        fetch("http://localhost:5000/Usuarios/Pregunta/Insertar", {
-            method: 'post',
-            body: JSON.stringify(
-                {
-                    preguntaID: selectedPregunta1,
-                    usuario: usuario,
-                    respuesta: respuesta1,
-                }), headers:
-            {
-                'Content-type': 'application/json; charset=UTF-8',
-            },
-        })
-            .then((response) => response.json())
-            .then((data) => {
-            })
-            .catch((err) => { console.log(err.message); });
-
-        fetch("http://localhost:5000/Usuarios/Pregunta/Insertar", {
-            method: 'post',
-            body: JSON.stringify(
-                {
-                    preguntaID: selectedPregunta2,
-                    usuario: usuario,
-                    respuesta: respuesta2,
-                }), headers:
-            {
-                'Content-type': 'application/json; charset=UTF-8',
-            },
-        })
-            .then((response) => response.json())
-            .then((data) => {
-            })
-            .catch((err) => { console.log(err.message); });
-
-        fetch("http://localhost:5000/Usuarios/Pregunta/Insertar", {
-            method: 'post',
-            body: JSON.stringify(
-                {
-                    preguntaID: selectedPregunta3,
-                    usuario: usuario,
-                    respuesta: respuesta3,
-                }), headers:
-            {
-                'Content-type': 'application/json; charset=UTF-8',
-            },
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data);
-                window.location.reload();
-                closeModal();
-            })
-            .catch((err) => { console.log(err.message); });
-        setNombre("");
-        setUsuario("");
-        setApellido("");
-        setCorreo("");
-        setPassword("");
-        setSelectedRol("");
-        setSelectedCarrera("");
-        setRespuesta1("");
-        setRespuesta2("");
-        setRespuesta3("");
-        setSelectedPregunta1("");
-        setSelectedPregunta2("");
-        setSelectedPregunta3("");
     };
 
 
