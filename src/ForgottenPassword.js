@@ -25,27 +25,35 @@ function ForgottenPassword() {
 
     // Validar usuario
     const handleSubmit = (e) => {
-        e.preventDefault();
-        fetch("http://localhost:5000/Informacion/Preguntas/Usuario", {
-            method: "POST",
-            body: JSON.stringify({
-                usuario: usuario,
-            }),
-            headers: {
-                "Content-type": "application/json; charset=UTF-8",
-            },
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.length > 0) {
-                    console.log(data);
-                    setPreguntas([
-                        data[0].Pregunta,
-                        data[1].Pregunta,
-                        data[2].Pregunta,
-                    ]);
-                }
-            });
+        if (usuario === "") {
+            alert("Porfavor, escribe un usuario")
+        } else {
+            e.preventDefault();
+            fetch("http://localhost:5000/Informacion/Preguntas/Usuario", {
+                method: "POST",
+                body: JSON.stringify({
+                    usuario: usuario,
+                }),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.length > 0) {
+                        console.log(data);
+                        setPreguntas([
+                            data[0].Pregunta,
+                            data[1].Pregunta,
+                            data[2].Pregunta,
+                        ]);
+                        alert("El usuario existe!");
+                    }else {
+                        alert("El usuario no existe!");
+                    }
+                });
+        }
+
     };
 
     // Conseguir contraseña
@@ -54,26 +62,36 @@ function ForgottenPassword() {
         console.log(respuesta1);
         console.log(respuesta2);
         console.log(respuesta3);
+        if ((respuesta1 === "") || (respuesta2 === "") || (respuesta3 === "")) {
+            alert("Responde todas las preguntas de seguridad!")
+        } else {
+            fetch("http://localhost:5000/Informacion/Contrasena/Recuperar", {
+                method: "POST",
+                body: JSON.stringify({
+                    usuario,
+                    respuesta1,
+                    respuesta2,
+                    respuesta3,
+                }),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.length > 0) {
+                        console.log(data);
+                        alert("Contraseña: " + data[0].Contrasena);
+                    }else{
+                        alert("Respuestas incorrectas!");
+                        setRespuesta1("");
+                        setRespuesta2("");
+                        setRespuesta3("");
+                    }
+                });
+        }
 
-        fetch("http://localhost:5000/Informacion/Contrasena/Recuperar", {
-            method: "POST",
-            body: JSON.stringify({
-                usuario,
-                respuesta1,
-                respuesta2,
-                respuesta3,
-            }),
-            headers: {
-                "Content-type": "application/json; charset=UTF-8",
-            },
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.length > 0) {
-                    console.log(data);
-                    alert("Contraseña: " + data[0].Contrasena);
-                }
-            });
+
     };
 
     return (
