@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Table, Button } from "semantic-ui-react";
 import AsignaturaEliminar from "./AsignaturaEliminar";
+import AsignaturaEditar from "./AsignaturaEditar";
 
 const AsignaturasTable = ({ asignaturas }) => {
-    const handleEditar = (asignatura) => {
-        // Aquí puedes implementar la lógica para editar la asignatura
-        console.log("Editar asignatura:", asignatura);
+    const [isModalOpenEditar, setIsModalOpenEditar] = useState(false);
+    const openEditarAsignatura = () => setIsModalOpenEditar(true);
+    const closeEditarAsignatura = () => {
+        setIsModalOpenEditar(false);
+        localStorage.removeItem("codigo");
+        localStorage.removeItem("credito");
+        localStorage.removeItem("titulo");
+        localStorage.removeItem("profesor");
+        localStorage.removeItem("area");
     };
 
     const [isModalOpenEliminar, setIsModalOpenEliminar] = useState(false);
@@ -24,7 +31,8 @@ const AsignaturasTable = ({ asignaturas }) => {
                         <Table.HeaderCell>Título</Table.HeaderCell>
                         <Table.HeaderCell>Crédito</Table.HeaderCell>
                         <Table.HeaderCell>Profesor</Table.HeaderCell>
-                        <Table.HeaderCell>Acciones</Table.HeaderCell>{" "}
+                        <Table.HeaderCell>Area</Table.HeaderCell>
+                        <Table.HeaderCell>Acciones</Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
                 <Table.Body>
@@ -34,10 +42,33 @@ const AsignaturasTable = ({ asignaturas }) => {
                             <Table.Cell>{asignatura.Titulo}</Table.Cell>
                             <Table.Cell>{asignatura.Credito}</Table.Cell>
                             <Table.Cell>{asignatura.Profesor}</Table.Cell>
+                            <Table.Cell>{asignatura.Area}</Table.Cell>
                             <Table.Cell>
                                 <Button
                                     primary
-                                    onClick={() => handleEditar(asignatura)}
+                                    onClick={() => {
+                                        openEditarAsignatura();
+                                        localStorage.setItem(
+                                            "codigo",
+                                            asignatura.Codigo
+                                        );
+                                        localStorage.setItem(
+                                            "credito",
+                                            asignatura.Credito
+                                        );
+                                        localStorage.setItem(
+                                            "titulo",
+                                            asignatura.Titulo
+                                        );
+                                        localStorage.setItem(
+                                            "profesor",
+                                            asignatura.Profesor
+                                        );
+                                        localStorage.setItem(
+                                            "area",
+                                            asignatura.Area
+                                        );
+                                    }}
                                     content="Editar"
                                     size="compact"
                                 />
@@ -45,7 +76,10 @@ const AsignaturasTable = ({ asignaturas }) => {
                                     primary
                                     onClick={() => {
                                         openEliminarAsignatura();
-                                        localStorage.setItem("asignatura", asignatura.Codigo);
+                                        localStorage.setItem(
+                                            "asignatura",
+                                            asignatura.Codigo
+                                        );
                                     }}
                                     content="Eliminar"
                                     size="compact"
@@ -55,8 +89,15 @@ const AsignaturasTable = ({ asignaturas }) => {
                     ))}
                 </Table.Body>
             </Table>
-        
-        <AsignaturaEliminar isOpen={isModalOpenEliminar} closeModal={closeEliminarAsignatura} />
+
+            <AsignaturaEditar
+                isOpen={isModalOpenEditar}
+                closeModal={closeEditarAsignatura}
+            />
+            <AsignaturaEliminar
+                isOpen={isModalOpenEliminar}
+                closeModal={closeEliminarAsignatura}
+            />
         </>
     );
 };
@@ -68,7 +109,7 @@ function TablaAsignaturas() {
             .then((response) => response.json())
             .then((data) => {
                 setAsignaturas(data);
-                console.log(asignaturas);
+                console.log(data);
             })
             .catch((err) => {
                 console.log(err.message);
