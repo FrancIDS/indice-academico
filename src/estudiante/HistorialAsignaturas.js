@@ -9,7 +9,7 @@ const TablaAsignaturas = ({ asignaturas }) => {
                 <Table.Row>
                     <Table.HeaderCell>Código</Table.HeaderCell>
                     <Table.HeaderCell>Título</Table.HeaderCell>
-                    <Table.HeaderCell>Crédito</Table.HeaderCell>
+                    <Table.HeaderCell>Créditos</Table.HeaderCell>
                     <Table.HeaderCell>Calificación</Table.HeaderCell>
                 </Table.Row>
             </Table.Header>
