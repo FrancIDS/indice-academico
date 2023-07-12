@@ -48,7 +48,7 @@ const UsuariosTable = ({ usuarios }) => {
                             {/* <Table.Cell>{usuario.contrasena}</Table.Cell> */}
                             <Table.Cell>{usuario.Correo}</Table.Cell>
                             <Table.Cell>{usuario.Rol}</Table.Cell>
-                            <Table.Cell>{usuario.Carrera}</Table.Cell>
+                            <Table.Cell>{(usuario.Rol === "Estudiante") ? usuario.Carrera : ""}</Table.Cell>
                             <Table.Cell>
                                 <Button
                                     primary
