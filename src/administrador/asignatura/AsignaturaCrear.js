@@ -19,7 +19,7 @@ function AsignaturaCrear({ isOpen, closeModal }) {
             fetch("http://localhost:5000/Asignaturas/Insertar", {
                 method: "POST",
                 body: JSON.stringify({
-                    codigo: codigo,
+                    codigo: codigo.toUpperCase(),
                     nombre: titulo.toUpperCase(),
                     credito: credito,
                     area: selectedArea,
@@ -55,20 +55,13 @@ function AsignaturaCrear({ isOpen, closeModal }) {
                 },
             })
                 .then((response) => response.json())
-                .then((data) => {
-                    if (
-                        error === false &&
-                        (codigo === "" ||
-                            titulo === "" ||
-                            credito === "" ||
-                            selectedArea === "")
-                    ) {
-                        alert("No dejes campos vacios!");
-                    }
-                })
+                .then((data) => {})
                 .catch((err) => {
                     console.log(err.message);
                 });
+        }
+        else {
+            alert("No dejes campos vacios!");
         }
     };
 
