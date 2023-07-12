@@ -7,26 +7,27 @@ function UsuarioEliminar({ isOpen, closeModal }) {
 
     const handleSubmit = () => {
         fetch("http://localhost:5000/Usuarios/Eliminar/Pregunta", {
-            method: 'DELETE',
+            method: "DELETE",
             body: JSON.stringify({
                 usuario: localStorage.getItem("usuario"),
             }),
             headers: {
-                'Content-type': 'application/json; charset=UTF-8',
+                "Content-type": "application/json; charset=UTF-8",
             },
         })
             .then((response) => response.json())
-            .then((data) => {
-            })
-            .catch((err) => { console.log(err.message); });
+            .then((data) => {})
+            .catch((err) => {
+                console.log(err.message);
+            });
 
         fetch("http://localhost:5000/Usuarios/Eliminar", {
-            method: 'DELETE',
+            method: "DELETE",
             body: JSON.stringify({
                 usuario: localStorage.getItem("usuario"),
             }),
             headers: {
-                'Content-type': 'application/json; charset=UTF-8',
+                "Content-type": "application/json; charset=UTF-8",
             },
         })
             .then((response) => response.json())
@@ -34,12 +35,16 @@ function UsuarioEliminar({ isOpen, closeModal }) {
                 window.location.reload();
                 closeModal();
             })
-            .catch((err) => { console.log(err.message); });
+            .catch((err) => {
+                console.log(err.message);
+            });
     };
 
     return (
         <Modal size="tiny" open={isOpen} onClose={closeModal}>
-            <Modal.Header as="h2">¿Estás seguro de eliminar el usuario?</Modal.Header>
+            <Modal.Header as="h2">
+                ¿Estás seguro de eliminar el usuario?
+            </Modal.Header>
             <Modal.Content>
                 <Form onSubmit={handleSubmit}>
                     <p>

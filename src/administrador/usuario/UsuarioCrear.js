@@ -4,21 +4,35 @@ import { Form, Button, Modal, Grid } from "semantic-ui-react";
 function UsuarioCrear({ isOpen, closeModal }) {
     const handleSubmit = (e) => {
         let error = false;
-        if ((nombre === "") || (usuario === "") || (apellido === "") || (correo === "") || (password === "") || (selectedRol === "")
-            || (selectedPregunta1 === "") || (selectedPregunta2 === "") || (selectedPregunta3 === "") || (respuesta1 === "") || (respuesta2 == "")
-            || (respuesta3 === "")) {
-            alert('No dejes campos vacios!');
+        if (
+            nombre === "" ||
+            usuario === "" ||
+            apellido === "" ||
+            correo === "" ||
+            password === "" ||
+            selectedRol === "" ||
+            selectedPregunta1 === "" ||
+            selectedPregunta2 === "" ||
+            selectedPregunta3 === "" ||
+            respuesta1 === "" ||
+            respuesta2 == "" ||
+            respuesta3 === ""
+        ) {
+            alert("No dejes campos vacios!");
             error = true;
         } else if (selectedRol === 3 && selectedCarrera === "") {
-            alert('No dejes campos vacios!')
-        }
-        else if ((selectedPregunta1 === selectedPregunta2) ||(selectedPregunta1 === selectedPregunta3) || (selectedPregunta2 === selectedPregunta3)){
-            alert('Elige preguntas diferentes!')
-        }
-        else {
-            if (selectedRol === 1) { //Administrador
+            alert("No dejes campos vacios!");
+        } else if (
+            selectedPregunta1 === selectedPregunta2 ||
+            selectedPregunta1 === selectedPregunta3 ||
+            selectedPregunta2 === selectedPregunta3
+        ) {
+            alert("Elige preguntas diferentes!");
+        } else {
+            if (selectedRol === 1) {
+                //Administrador
                 fetch("http://localhost:5000/Profesores/Insertar", {
-                    method: 'POST',
+                    method: "POST",
                     body: JSON.stringify({
                         nombre: nombre,
                         usuario: usuario,
@@ -28,18 +42,18 @@ function UsuarioCrear({ isOpen, closeModal }) {
                         rolID: selectedRol,
                     }),
                     headers: {
-                        'Content-type': 'application/json; charset=UTF-8',
+                        "Content-type": "application/json; charset=UTF-8",
                     },
                 })
                     .then((response) => response.json())
-                    .then((data) => {
-                    })
+                    .then((data) => {})
                     .catch((err) => {
                         console.log(err.message);
                     });
-            } else if (selectedRol === 2) {//Profesor
+            } else if (selectedRol === 2) {
+                //Profesor
                 fetch("http://localhost:5000/Profesores/Insertar", {
-                    method: 'POST',
+                    method: "POST",
                     body: JSON.stringify({
                         nombre: nombre,
                         usuario: usuario,
@@ -49,18 +63,18 @@ function UsuarioCrear({ isOpen, closeModal }) {
                         rolID: selectedRol,
                     }),
                     headers: {
-                        'Content-type': 'application/json; charset=UTF-8',
+                        "Content-type": "application/json; charset=UTF-8",
                     },
                 })
                     .then((response) => response.json())
-                    .then((data) => {
-                    })
+                    .then((data) => {})
                     .catch((err) => {
                         console.log(err.message);
                     });
-            } else { //Estudiante
+            } else {
+                //Estudiante
                 fetch("http://localhost:5000/Estudiantes/Insertar", {
-                    method: 'POST',
+                    method: "POST",
                     body: JSON.stringify({
                         nombre: nombre,
                         usuario: usuario,
@@ -71,12 +85,11 @@ function UsuarioCrear({ isOpen, closeModal }) {
                         carreraID: selectedCarrera,
                     }),
                     headers: {
-                        'Content-type': 'application/json; charset=UTF-8',
+                        "Content-type": "application/json; charset=UTF-8",
                     },
                 })
                     .then((response) => response.json())
-                    .then((data) => {
-                    })
+                    .then((data) => {})
                     .catch((err) => {
                         console.log(err.message);
                     });
@@ -84,49 +97,48 @@ function UsuarioCrear({ isOpen, closeModal }) {
 
             setTimeout(1000);
             fetch("http://localhost:5000/Usuarios/Pregunta/Insertar", {
-                method: 'post',
-                body: JSON.stringify(
-                    {
-                        preguntaID: selectedPregunta1,
-                        usuario: usuario,
-                        respuesta: respuesta1,
-                    }), headers:
-                {
-                    'Content-type': 'application/json; charset=UTF-8',
+                method: "post",
+                body: JSON.stringify({
+                    preguntaID: selectedPregunta1,
+                    usuario: usuario,
+                    respuesta: respuesta1,
+                }),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
                 },
             })
                 .then((response) => response.json())
-                .then((data) => {
-                })
-                .catch((err) => { console.log(err.message); });
+                .then((data) => {})
+                .catch((err) => {
+                    console.log(err.message);
+                });
 
             fetch("http://localhost:5000/Usuarios/Pregunta/Insertar", {
-                method: 'post',
-                body: JSON.stringify(
-                    {
-                        preguntaID: selectedPregunta2,
-                        usuario: usuario,
-                        respuesta: respuesta2,
-                    }), headers:
-                {
-                    'Content-type': 'application/json; charset=UTF-8',
+                method: "post",
+                body: JSON.stringify({
+                    preguntaID: selectedPregunta2,
+                    usuario: usuario,
+                    respuesta: respuesta2,
+                }),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
                 },
             })
                 .then((response) => response.json())
-                .then((data) => {
-                })
-                .catch((err) => { console.log(err.message); });
+                .then((data) => {})
+                .catch((err) => {
+                    console.log(err.message);
+                });
 
             fetch("http://localhost:5000/Usuarios/Pregunta/Insertar", {
-                method: 'post',
-                body: JSON.stringify(
-                    {
-                        preguntaID: selectedPregunta3,
-                        usuario: usuario,
-                        respuesta: respuesta3,
-                    }), headers:
-                {
-                    'Content-type': 'application/json; charset=UTF-8',
+                method: "post",
+                body: JSON.stringify({
+                    preguntaID: selectedPregunta3,
+                    usuario: usuario,
+                    respuesta: respuesta3,
+                }),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
                 },
             })
                 .then((response) => response.json())
@@ -135,7 +147,9 @@ function UsuarioCrear({ isOpen, closeModal }) {
                     window.location.reload();
                     closeModal();
                 })
-                .catch((err) => { console.log(err.message); });
+                .catch((err) => {
+                    console.log(err.message);
+                });
 
             setNombre("");
             setUsuario("");
@@ -151,9 +165,7 @@ function UsuarioCrear({ isOpen, closeModal }) {
             setSelectedPregunta2("");
             setSelectedPregunta3("");
         }
-
     };
-
 
     const [roles, setRoles] = useState([]);
     const [carreras, setCarreras] = useState([]);
@@ -208,18 +220,19 @@ function UsuarioCrear({ isOpen, closeModal }) {
     const [apellido, setApellido] = useState("");
     const [correo, setCorreo] = useState("");
 
-
     // ComboBox
-
 
     const handleRolChange = (e, { value }) => setSelectedRol(value);
     const handleCarreraChange = (e, { value }) => setSelectedCarrera(value);
     const handleRespuesta1Change = (e, { value }) => setRespuesta1(value);
     const handleRespuesta2Change = (e, { value }) => setRespuesta2(value);
     const handleRespuesta3Change = (e, { value }) => setRespuesta3(value);
-    const handleSelectedPregunta1Change = (e, { value }) => setSelectedPregunta1(value);
-    const handleSelectedPregunta2Change = (e, { value }) => setSelectedPregunta2(value);
-    const handleSelectedPregunta3Change = (e, { value }) => setSelectedPregunta3(value);
+    const handleSelectedPregunta1Change = (e, { value }) =>
+        setSelectedPregunta1(value);
+    const handleSelectedPregunta2Change = (e, { value }) =>
+        setSelectedPregunta2(value);
+    const handleSelectedPregunta3Change = (e, { value }) =>
+        setSelectedPregunta3(value);
 
     const [selectedRol, setSelectedRol] = useState("");
     const [selectedCarrera, setSelectedCarrera] = useState("");
@@ -242,15 +255,15 @@ function UsuarioCrear({ isOpen, closeModal }) {
 
     roles.map((x) => {
         optionsRol.push({ text: x.Rol, value: x.ID });
-    })
+    });
 
     carreras.map((x) => {
         optionsCarrera.push({ text: x.Carrera, value: x.ID });
-    })
+    });
 
     preguntas.map((x) => {
         optionsPreguntas.push({ text: x.Pregunta, value: x.ID });
-    })
+    });
 
     return (
         <Modal size="large" open={isOpen} onClose={closeModal}>
@@ -312,9 +325,7 @@ function UsuarioCrear({ isOpen, closeModal }) {
                                         onChange={handleRolChange}
                                     />
                                     <Form.Select
-                                        disabled={
-                                            selectedRol != 3
-                                        }
+                                        disabled={selectedRol != 3}
                                         width={5}
                                         label="Carrera"
                                         placeholder="Carrera"
@@ -380,8 +391,7 @@ function UsuarioCrear({ isOpen, closeModal }) {
                     </Form>
                 </div>
             </Modal.Content>
-            <Modal.Actions>
-            </Modal.Actions>
+            <Modal.Actions></Modal.Actions>
         </Modal>
     );
 }

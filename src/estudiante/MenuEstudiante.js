@@ -86,6 +86,7 @@ function MenuEstudiante() {
                 Jueves: objeto.Jueves,
                 Viernes: objeto.Viernes,
                 Sabado: objeto.Sabado,
+                Profesor: objeto.Profesor,
             };
         } else {
             if (objeto.Lunes) {
@@ -234,24 +235,48 @@ function MenuEstudiante() {
                                             {asignatura.Creditos}
                                         </Table.Cell>
                                         <Table.Cell>
-                                            {(asignatura.Lunes) ? reformatHorario(asignatura.Lunes) : asignatura.Lunes}
+                                            {asignatura.Lunes
+                                                ? reformatHorario(
+                                                      asignatura.Lunes
+                                                  )
+                                                : asignatura.Lunes}
                                         </Table.Cell>
                                         <Table.Cell>
-                                        {(asignatura.Martes) ? reformatHorario(asignatura.Martes) : asignatura.Martes}
+                                            {asignatura.Martes
+                                                ? reformatHorario(
+                                                      asignatura.Martes
+                                                  )
+                                                : asignatura.Martes}
                                         </Table.Cell>
                                         <Table.Cell>
-                                        {(asignatura.Miercoles) ? reformatHorario(asignatura.Miercoles) : asignatura.Miercoles}
+                                            {asignatura.Miercoles
+                                                ? reformatHorario(
+                                                      asignatura.Miercoles
+                                                  )
+                                                : asignatura.Miercoles}
                                         </Table.Cell>
                                         <Table.Cell>
-                                        {(asignatura.Jueves) ? reformatHorario(asignatura.Jueves) : asignatura.Jueves}
+                                            {asignatura.Jueves
+                                                ? reformatHorario(
+                                                      asignatura.Jueves
+                                                  )
+                                                : asignatura.Jueves}
                                         </Table.Cell>
                                         <Table.Cell>
-                                        {(asignatura.Viernes) ? reformatHorario(asignatura.Viernes) : asignatura.Viernes}
+                                            {asignatura.Viernes
+                                                ? reformatHorario(
+                                                      asignatura.Viernes
+                                                  )
+                                                : asignatura.Viernes}
                                         </Table.Cell>
                                         <Table.Cell>
-                                        {(asignatura.Sabado) ? reformatHorario(asignatura.Sabado) : asignatura.Sabado}
+                                            {asignatura.Sabado
+                                                ? reformatHorario(
+                                                      asignatura.Sabado
+                                                  )
+                                                : asignatura.Sabado}
                                         </Table.Cell>
-                                        <Table.Cell>""</Table.Cell>
+                                        <Table.Cell>{asignatura.Profesor}</Table.Cell>
                                     </Table.Row>
                                 ))}
                             </Table.Body>

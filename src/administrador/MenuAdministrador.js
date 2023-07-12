@@ -9,25 +9,25 @@ function MenuAdministrador() {
     const [areas, setAreas] = useState([]);
     const [users, setUsers] = useState([]);
     useEffect(() => {
-        fetch('http://localhost:5000/Informacion/Areas/Mostrar')
+        fetch("http://localhost:5000/Informacion/Areas/Mostrar")
             .then((response) => response.json())
             .then((data) => {
-                setAreas(data)
+                setAreas(data);
                 console.log(areas);
             })
             .catch((err) => {
-                console.log(err.message)
+                console.log(err.message);
             });
 
-        fetch('http://localhost:5000/Informacion/Usuario/Contar')
+        fetch("http://localhost:5000/Informacion/Usuario/Contar")
             .then((response) => response.json())
             .then((data) => {
-                setUsers(data)
+                setUsers(data);
                 console.log(users);
             })
             .catch((err) => {
-                console.log(err.message)
-            })
+                console.log(err.message);
+            });
     }, []);
 
     let areaLabels = areas.map((area) => area.Area);
@@ -83,7 +83,9 @@ function MenuAdministrador() {
 
     return (
         <Container>
-            <Header as="h1">Bienvenido, @{localStorage.getItem("userUsuario")}</Header>
+            <Header as="h1">
+                Bienvenido, @{localStorage.getItem("userUsuario")}
+            </Header>
             <Table celled color="blue">
                 <Table.Header>
                     <Table.Row>
@@ -95,10 +97,18 @@ function MenuAdministrador() {
                 </Table.Header>
                 <Table.Body>
                     <Table.Row>
-                        <Table.Cell>{localStorage.getItem("userRol")}</Table.Cell>
-                        <Table.Cell>{localStorage.getItem("userNombre")}</Table.Cell>
-                        <Table.Cell>{localStorage.getItem("userApellido")}</Table.Cell>
-                        <Table.Cell>{localStorage.getItem("userCorreo")}</Table.Cell>
+                        <Table.Cell>
+                            {localStorage.getItem("userRol")}
+                        </Table.Cell>
+                        <Table.Cell>
+                            {localStorage.getItem("userNombre")}
+                        </Table.Cell>
+                        <Table.Cell>
+                            {localStorage.getItem("userApellido")}
+                        </Table.Cell>
+                        <Table.Cell>
+                            {localStorage.getItem("userCorreo")}
+                        </Table.Cell>
                     </Table.Row>
                 </Table.Body>
             </Table>

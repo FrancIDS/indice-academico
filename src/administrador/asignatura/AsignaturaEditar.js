@@ -5,13 +5,16 @@ function AsignaturaEditar({ isOpen, closeModal }) {
     const handleSubmit = (e) => {
         if (isNaN(credito)) {
             alert('Escribe un numero en el campo "Creditos"');
-        }
-        else if ((codigo === "") || (titulo === "") || (credito === "") || (selectedArea === "")) {
-            alert('No dejes campos vacios!');
-        }
-        else{
+        } else if (
+            codigo === "" ||
+            titulo === "" ||
+            credito === "" ||
+            selectedArea === ""
+        ) {
+            alert("No dejes campos vacios!");
+        } else {
             fetch("http://localhost:5000/Asignaturas/Modificar", {
-                method: 'PATCH',
+                method: "PATCH",
                 body: JSON.stringify({
                     codigo: codigo,
                     nombre: titulo.toUpperCase(),
@@ -19,7 +22,7 @@ function AsignaturaEditar({ isOpen, closeModal }) {
                     area: selectedArea,
                 }),
                 headers: {
-                    'Content-type': 'application/json; charset=UTF-8',
+                    "Content-type": "application/json; charset=UTF-8",
                 },
             })
                 .then((response) => response.json())

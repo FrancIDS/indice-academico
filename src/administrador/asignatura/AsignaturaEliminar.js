@@ -3,32 +3,32 @@ import { Form, Modal } from "semantic-ui-react";
 
 function AsignaturaEliminar({ isOpen, closeModal }) {
     const [asignaturaEliminar, setAsignaturaEliminar] = useState();
-    const handleAsignaturaEliminar = (e, { value }) => setAsignaturaEliminar(value);
+    const handleAsignaturaEliminar = (e, { value }) =>
+        setAsignaturaEliminar(value);
 
     const handleSubmit = () => {
         fetch("http://localhost:5000/Asignaturas/Eliminar/Horario", {
-            method: 'delete',
+            method: "delete",
             body: JSON.stringify({
                 codigo: localStorage.getItem("asignatura"),
             }),
             headers: {
-                'Content-type': 'application/json; charset=UTF-8',
+                "Content-type": "application/json; charset=UTF-8",
             },
         })
             .then((response) => response.json())
-            .then((data) => {
-            })
+            .then((data) => {})
             .catch((err) => {
                 console.log(err.message);
             });
 
         fetch("http://localhost:5000/Asignaturas/Eliminar/Seccion", {
-            method: 'delete',
+            method: "delete",
             body: JSON.stringify({
                 codigo: localStorage.getItem("asignatura"),
             }),
             headers: {
-                'Content-type': 'application/json; charset=UTF-8',
+                "Content-type": "application/json; charset=UTF-8",
             },
         })
             .then((response) => response.json())
@@ -36,32 +36,30 @@ function AsignaturaEliminar({ isOpen, closeModal }) {
                 window.location.reload();
                 closeModal();
             })
-            .catch((err) => {
-            });
+            .catch((err) => {});
 
         fetch("http://localhost:5000/Asignaturas/Eliminar/Profesor", {
-            method: 'delete',
+            method: "delete",
             body: JSON.stringify({
                 codigo: localStorage.getItem("asignatura"),
             }),
             headers: {
-                'Content-type': 'application/json; charset=UTF-8',
+                "Content-type": "application/json; charset=UTF-8",
             },
         })
             .then((response) => response.json())
-            .then((data) => {
-            })
+            .then((data) => {})
             .catch((err) => {
                 console.log(err.message);
             });
 
         fetch("http://localhost:5000/Asignaturas/Eliminar", {
-            method: 'delete',
+            method: "delete",
             body: JSON.stringify({
                 codigo: localStorage.getItem("asignatura"),
             }),
             headers: {
-                'Content-type': 'application/json; charset=UTF-8',
+                "Content-type": "application/json; charset=UTF-8",
             },
         })
             .then((response) => response.json())
@@ -75,7 +73,9 @@ function AsignaturaEliminar({ isOpen, closeModal }) {
 
     return (
         <Modal size="tiny" open={isOpen} onClose={closeModal}>
-            <Modal.Header as="h2">¿Estás seguro de eliminar la asignatura?</Modal.Header>
+            <Modal.Header as="h2">
+                ¿Estás seguro de eliminar la asignatura?
+            </Modal.Header>
             <Modal.Content>
                 <Form onSubmit={handleSubmit}>
                     <p>
@@ -93,7 +93,8 @@ function AsignaturaEliminar({ isOpen, closeModal }) {
                         fluid
                         type="submit"
                         disabled={
-                            asignaturaEliminar != localStorage.getItem("asignatura")
+                            asignaturaEliminar !=
+                            localStorage.getItem("asignatura")
                         }
                     >
                         Eliminar asignatura

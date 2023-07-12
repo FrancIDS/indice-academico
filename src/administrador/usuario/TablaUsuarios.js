@@ -54,30 +54,70 @@ const UsuariosTable = ({ usuarios }) => {
                                     primary
                                     onClick={() => {
                                         openEditarUsuario();
-                                        localStorage.setItem("usuario", usuario.Usuario);
-                                        console.log(localStorage.getItem("usuario"));
-                                        localStorage.setItem("nombre", usuario.Nombre);
-                                        console.log(localStorage.getItem("nombre"));
-                                        localStorage.setItem("apellido", usuario.Apellido);
-                                        console.log(localStorage.getItem("apellido"));
-                                        localStorage.setItem("correo", usuario.Correo);
-                                        console.log(localStorage.getItem("correo"));
-                                        localStorage.setItem("contrasena", usuario.Contrasena);
-                                        console.log(localStorage.getItem("contrasena"));
-                                        localStorage.setItem("rol", usuario.Rol);
-                                        console.log(localStorage.getItem("rol"));
-                                        localStorage.setItem("carrera", usuario.Carrera);
-                                        console.log(localStorage.getItem("carrera"));
+                                        localStorage.setItem(
+                                            "usuario",
+                                            usuario.Usuario
+                                        );
+                                        console.log(
+                                            localStorage.getItem("usuario")
+                                        );
+                                        localStorage.setItem(
+                                            "nombre",
+                                            usuario.Nombre
+                                        );
+                                        console.log(
+                                            localStorage.getItem("nombre")
+                                        );
+                                        localStorage.setItem(
+                                            "apellido",
+                                            usuario.Apellido
+                                        );
+                                        console.log(
+                                            localStorage.getItem("apellido")
+                                        );
+                                        localStorage.setItem(
+                                            "correo",
+                                            usuario.Correo
+                                        );
+                                        console.log(
+                                            localStorage.getItem("correo")
+                                        );
+                                        localStorage.setItem(
+                                            "contrasena",
+                                            usuario.Contrasena
+                                        );
+                                        console.log(
+                                            localStorage.getItem("contrasena")
+                                        );
+                                        localStorage.setItem(
+                                            "rol",
+                                            usuario.Rol
+                                        );
+                                        console.log(
+                                            localStorage.getItem("rol")
+                                        );
+                                        localStorage.setItem(
+                                            "carrera",
+                                            usuario.Carrera
+                                        );
+                                        console.log(
+                                            localStorage.getItem("carrera")
+                                        );
                                     }}
                                     content="Editar"
                                     size="compact"
-
                                 />
                                 <Button
-                                    disabled={usuario.Usuario == localStorage.getItem("userUsuario")}
+                                    disabled={
+                                        usuario.Usuario ==
+                                        localStorage.getItem("userUsuario")
+                                    }
                                     primary
                                     onClick={() => {
-                                        localStorage.setItem("usuario", usuario.Usuario);
+                                        localStorage.setItem(
+                                            "usuario",
+                                            usuario.Usuario
+                                        );
                                         openEliminarUsuario();
                                     }}
                                     content="Eliminar"
@@ -93,7 +133,10 @@ const UsuariosTable = ({ usuarios }) => {
                 isOpen={isModalOpenEditar}
                 closeModal={closeEditarUsuario}
             />
-            <UsuarioEliminar isOpen={isModalOpenEliminar} closeModal={closeEliminarUsuario} />
+            <UsuarioEliminar
+                isOpen={isModalOpenEliminar}
+                closeModal={closeEliminarUsuario}
+            />
         </>
     );
 };

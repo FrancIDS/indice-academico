@@ -3,19 +3,21 @@ import { Form, Button, Modal } from "semantic-ui-react";
 
 function AsignaturaCrear({ isOpen, closeModal }) {
     const handleSubmit = (e) => {
-
         let error = false;
         if (isNaN(credito)) {
             alert('Escribe un numero en el campo "Creditos"');
             error = true;
-        }
-        else if ((codigo === "") || (titulo === "") || (credito === "") || (selectedArea === "")) {
-            alert('No dejes campos vacios!');
+        } else if (
+            codigo === "" ||
+            titulo === "" ||
+            credito === "" ||
+            selectedArea === ""
+        ) {
+            alert("No dejes campos vacios!");
             error = true;
-        }
-        else {
+        } else {
             fetch("http://localhost:5000/Asignaturas/Insertar", {
-                method: 'POST',
+                method: "POST",
                 body: JSON.stringify({
                     codigo: codigo,
                     nombre: titulo.toUpperCase(),
@@ -23,41 +25,51 @@ function AsignaturaCrear({ isOpen, closeModal }) {
                     area: selectedArea,
                 }),
                 headers: {
-                    'Content-type': 'application/json; charset=UTF-8',
+                    "Content-type": "application/json; charset=UTF-8",
                 },
             })
                 .then((response) => response.json())
                 .then((data) => {
                     closeModal();
-
                 })
                 .catch((err) => {
                     console.log(err.message);
                 });
         }
 
-        if (error === false && ((codigo != "") && (titulo != "") && (credito != "") && (selectedArea != ""))) {
+        if (
+            error === false &&
+            codigo != "" &&
+            titulo != "" &&
+            credito != "" &&
+            selectedArea != ""
+        ) {
             fetch("http://localhost:5000/Asignaturas/Asignar/Profesor", {
-                method: 'POST',
+                method: "POST",
                 body: JSON.stringify({
                     codigo: codigo,
                     profesor: selectedProfesor,
                 }),
                 headers: {
-                    'Content-type': 'application/json; charset=UTF-8',
+                    "Content-type": "application/json; charset=UTF-8",
                 },
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    if ((error === false) && ((codigo === "") || (titulo === "") || (credito === "") || (selectedArea === ""))) {
-                        alert('No dejes campos vacios!');
+                    if (
+                        error === false &&
+                        (codigo === "" ||
+                            titulo === "" ||
+                            credito === "" ||
+                            selectedArea === "")
+                    ) {
+                        alert("No dejes campos vacios!");
                     }
                 })
                 .catch((err) => {
                     console.log(err.message);
                 });
         }
-
     };
 
     const handleAreaChange = (e, { value }) => setSelectedArea(value);
@@ -165,8 +177,7 @@ function AsignaturaCrear({ isOpen, closeModal }) {
                     </Form>
                 </div>
             </Modal.Content>
-            <Modal.Actions>
-            </Modal.Actions>
+            <Modal.Actions></Modal.Actions>
         </Modal>
     );
 }

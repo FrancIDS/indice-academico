@@ -28,10 +28,7 @@ function AdministrarUsuarios() {
                 </Segment>
             </Container>
 
-            <UsuarioCrear
-                isOpen={isModalOpen}
-                closeModal={closeCrearUsuario}
-            />
+            <UsuarioCrear isOpen={isModalOpen} closeModal={closeCrearUsuario} />
         </div>
     );
 }
