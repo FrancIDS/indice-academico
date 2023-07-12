@@ -55,20 +55,13 @@ function AsignaturaCrear({ isOpen, closeModal }) {
                 },
             })
                 .then((response) => response.json())
-                .then((data) => {
-                    if (
-                        error === false &&
-                        (codigo === "" ||
-                            titulo === "" ||
-                            credito === "" ||
-                            selectedArea === "")
-                    ) {
-                        alert("No dejes campos vacios!");
-                    }
-                })
+                .then((data) => {})
                 .catch((err) => {
                     console.log(err.message);
                 });
+        }
+        else {
+            alert("No dejes campos vacios!");
         }
     };
 
