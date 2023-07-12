@@ -31,6 +31,7 @@ function AsignaturaCrear({ isOpen, closeModal }) {
                 .then((response) => response.json())
                 .then((data) => {
                     closeModal();
+                    window.location.reload();
                 })
                 .catch((err) => {
                     console.log(err.message);

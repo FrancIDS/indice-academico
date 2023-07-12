@@ -3,6 +3,7 @@ import { Form, Modal, Button } from "semantic-ui-react";
 
 function AsignaturaEditar({ isOpen, closeModal }) {
     const handleSubmit = (e) => {
+
         if (isNaN(credito)) {
             alert('Escribe un numero en el campo "Creditos"');
         } else if (
@@ -34,6 +35,39 @@ function AsignaturaEditar({ isOpen, closeModal }) {
                     console.log(err.message);
                 });
         }
+        
+        if(selectedProfesor !== localStorage.getItem("profesor")){
+            fetch("http://localhost:5000/Asignaturas/Eliminar/Profesor", {
+            method: "delete",
+            body: JSON.stringify({
+                codigo: codigo,
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {})
+            .catch((err) => {
+                console.log(err.message);
+            });
+        }
+
+        fetch("http://localhost:5000/Asignaturas/Asignar/Profesor", {
+                method: "POST",
+                body: JSON.stringify({
+                    codigo: codigo,
+                    profesor: selectedProfesor,
+                }),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => {})
+                .catch((err) => {
+                    console.log(err.message);
+                });
     };
 
     const [codigo, setCodigo] = useState("");
