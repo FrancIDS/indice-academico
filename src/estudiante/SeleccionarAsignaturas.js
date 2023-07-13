@@ -28,7 +28,6 @@ function SeleccionarAsignaturas() {
             .then((response) => response.json())
             .then((data) => {
                 setSeleccionadas(data);
-                console.log(data);
             })
             .catch((err) => {
                 console.log(err.message);
@@ -49,7 +48,6 @@ function SeleccionarAsignaturas() {
             .then((response) => response.json())
             .then((data) => {
                 setPorSeleccionar(data);
-                console.log(data);
             })
             .catch((err) => {
                 console.log(err.message);
@@ -153,15 +151,72 @@ function SeleccionarAsignaturas() {
         return inicio + " - " + fin;
     };
 
-    let asignaturasSeleccionadas = [];
+    function agregarSeccion (sID, horario) {
+        let horario = dia.split(" - ");
+        console.log(horario);
 
-    const agregarSeccion = (sID) => {
-        asignaturasSeleccionadas.push(sID);
-        console.log(asignaturasSeleccionadas);
+        // fetch("http://localhost:5000/Seleccion/Horario/Verificar", {
+        //     method: "POST",
+        //     body: JSON.stringify({
+        //         horarioV: 1,
+        //         horarioN: 2,
+        //     }),
+        //     headers: {
+        //         "Content-type": "application/json; charset=UTF-8",
+        //     },
+        // })
+        //     .then((response) => response.json())
+        //     .then((data) => {
+        //         setHorario(data)
+        //     })
+        //     .catch((err) => {
+        //         console.log(err.message);
+        //     });
+
+        // if(horario[0].Valido === 0){
+        //     fetch("http://localhost:5000/Seleccion/Estudiantes/Seleccionar", {
+        //     method: "POST",
+        //     body: JSON.stringify({
+        //         estudiante: localStorage.getItem("userUsuario"),
+        //         seccion: sID,
+        //     }),
+        //     headers: {
+        //         "Content-type": "application/json; charset=UTF-8",
+        //     },
+        // })
+        //     .then((response) => response.json())
+        //     .then((data) => {
+        //         console.log(data);
+        //         window.location.reload();
+        //     })
+        //     .catch((err) => {
+        //         console.log(err.message);
+        //     });
+        // }
+        // else{
+        //     alert("Esa seccion choca con una de tus asignaturas!");
+        // }
+        
     };
     const quitarSeccion = (sID) => {
-        asignaturasSeleccionadas.pop(sID);
-        console.log(asignaturasSeleccionadas);
+        fetch("http://localhost:5000/Seleccion/Estudiantes/QuitarSeleccion", {
+            method: "DELETE",
+            body: JSON.stringify({
+                estudiante: localStorage.getItem("userUsuario"),
+                seccion: sID,
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                window.location.reload();
+            })
+            .catch((err) => {
+                console.log(err.message);
+            });
     };
 
     return (
@@ -213,8 +268,8 @@ function SeleccionarAsignaturas() {
                                     <Table.Cell>
                                         {asignatura.Miercoles
                                             ? reformatHorario(
-                                                  asignatura.Miercoles
-                                              )
+                                                asignatura.Miercoles
+                                            )
                                             : asignatura.Miercoles}
                                     </Table.Cell>
                                     <Table.Cell>
@@ -225,8 +280,8 @@ function SeleccionarAsignaturas() {
                                     <Table.Cell>
                                         {asignatura.Viernes
                                             ? reformatHorario(
-                                                  asignatura.Viernes
-                                              )
+                                                asignatura.Viernes
+                                            )
                                             : asignatura.Viernes}
                                     </Table.Cell>
                                     <Table.Cell>
@@ -241,7 +296,8 @@ function SeleccionarAsignaturas() {
                                         <Button
                                             onClick={() => {
                                                 quitarSeccion(
-                                                    asignatura.seccionID
+                                                    asignatura.seccionID,
+                                                    asignatura.horario
                                                 );
                                             }}
                                         >
@@ -297,8 +353,8 @@ function SeleccionarAsignaturas() {
                                     <Table.Cell>
                                         {asignatura.Miercoles
                                             ? reformatHorario(
-                                                  asignatura.Miercoles
-                                              )
+                                                asignatura.Miercoles
+                                            )
                                             : asignatura.Miercoles}
                                     </Table.Cell>
                                     <Table.Cell>
@@ -309,8 +365,8 @@ function SeleccionarAsignaturas() {
                                     <Table.Cell>
                                         {asignatura.Viernes
                                             ? reformatHorario(
-                                                  asignatura.Viernes
-                                              )
+                                                asignatura.Viernes
+                                            )
                                             : asignatura.Viernes}
                                     </Table.Cell>
                                     <Table.Cell>
