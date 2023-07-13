@@ -153,6 +153,7 @@ function SeleccionarAsignaturas() {
 
     function agregarSeccion (sID, horario) {
 
+        //Cambio
         fetch("http://localhost:5000/Seleccion/Estudiantes/Seleccionar", {
             method: "POST",
             body: JSON.stringify({
