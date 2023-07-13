@@ -54,8 +54,8 @@ function MenuEstudiante() {
                 console.log(err.message);
             });
     }, []);
-    const indice = calculo.Indice;
 
+    const indice = calculo.Indice;
     const indiceAcademico = {
         labels: "",
         datasets: [
@@ -276,7 +276,9 @@ function MenuEstudiante() {
                                                   )
                                                 : asignatura.Sabado}
                                         </Table.Cell>
-                                        <Table.Cell>{asignatura.Profesor}</Table.Cell>
+                                        <Table.Cell>
+                                            {asignatura.Profesor}
+                                        </Table.Cell>
                                     </Table.Row>
                                 ))}
                             </Table.Body>

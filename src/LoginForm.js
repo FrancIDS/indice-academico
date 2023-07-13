@@ -23,7 +23,16 @@ const LoginForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         // Aquí puedes realizar alguna acción con los datos ingresados, como enviar una solicitud al servidor
-        if ((usuario === password) === "") {
+        if (usuario === "" || password === "") {
+            if (usuario !== "") {
+                alert("Por favor, completar el campo contraseña");
+                return;
+            }
+            if (password !== "") {
+                alert("Por favor, completar el campo usuario");
+                return;
+            }
+            alert("Por favor, completar las credenciales");
             return;
         }
         console.log("Usuario:", usuario);
