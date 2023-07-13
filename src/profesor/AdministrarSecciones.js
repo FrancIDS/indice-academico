@@ -8,8 +8,13 @@ import {
     Button,
     Grid,
 } from "semantic-ui-react";
+import SeccionCrear from "./components/SeccionCrear";
 
 function AdministrarSecciones() {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const openCrearSeccion = () => setIsModalOpen(true);
+    const closeCrearSeccion = () => setIsModalOpen(false);
+
     const [secciones, setSecciones] = useState([]);
     useEffect(() => {
         fetch("http://localhost:5000/Profesores/Secciones", {
@@ -133,7 +138,7 @@ function AdministrarSecciones() {
                                 </Header>
                             </Grid.Column>
                             <Grid.Column textAlign="right">
-                                <Button primary compact>
+                                <Button primary compact onClick={openCrearSeccion}>
                                     Crear sección
                                 </Button>
                             </Grid.Column>
@@ -233,6 +238,8 @@ function AdministrarSecciones() {
                     </Segment>
                 ))}
             </Container>
+
+            <SeccionCrear isOpen={isModalOpen} closeModal={closeCrearSeccion} />
         </div>
     );
 }
