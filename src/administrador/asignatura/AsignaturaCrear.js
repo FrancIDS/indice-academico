@@ -83,7 +83,10 @@ function AsignaturaCrear({ isOpen, closeModal }) {
 
     const handleCodigoChange = (e) => setCodigo(e.target.value);
     const handleTituloChange = (e) => setTitulo(e.target.value);
-    const handleCreditoChange = (e) => setCredito(e.target.value);
+    const handleCreditoChange = (e, {value}) => {
+        if (value == 1 || value == 2 || value == 3 || value == 4 || value == 5) setCredito(e.target.value);
+        else alert("El valor debe estar entre 1 y 5");
+    };
 
     useEffect(() => {
         fetch("http://localhost:5000/Informacion/Profesores/Mostrar")
