@@ -387,7 +387,6 @@ function SeleccionarAsignaturas() {
                                 )}
                             </Table.Body>
                         </Table>
-                    </div>
                 </Segment>
             </Container>
             <footer style={{ height: "50px" }}></footer>
