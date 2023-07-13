@@ -100,11 +100,11 @@ function SeleccionarAsignaturas() {
     let combinadoP = {};
     for (let i = 0; i < porSeleccionar.length; i++) {
         let objetoP = porSeleccionar[i];
-        let Codigo = objetoP.Codigo;
+        let Codigo = objetoP.seccionID;
 
         if (!combinadoP[Codigo]) {
             combinadoP[Codigo] = {
-                Codigo: Codigo,
+                Codigo: objetoP.Codigo,
                 Asignatura: objetoP.Asignatura,
                 Creditos: objetoP.Creditos,
                 Lunes: objetoP.Lunes,
@@ -114,7 +114,7 @@ function SeleccionarAsignaturas() {
                 Viernes: objetoP.Viernes,
                 Sabado: objetoP.Sabado,
                 Profesor: objetoP.Profesor,
-                seccionID: objetoP.seccionID,
+                seccionID: Codigo,
             };
         } else {
             if (objetoP.Lunes) {

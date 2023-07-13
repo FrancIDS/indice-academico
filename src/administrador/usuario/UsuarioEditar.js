@@ -207,6 +207,7 @@ function UsuarioEditar({ isOpen, closeModal }) {
                                 value={selectedRol}
                             />
                             <Form.Select
+                                disabled={selectedRol != "Estudiante"}
                                 width={5}
                                 label="Carrera"
                                 placeholder={selectedCarrera}
