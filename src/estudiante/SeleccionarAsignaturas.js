@@ -151,52 +151,28 @@ function SeleccionarAsignaturas() {
         return inicio + " - " + fin;
     };
 
-    function agregarSeccion(sID, dia) {
-        let horario = dia.split(" - ");
-        console.log(horario);
+    function agregarSeccion (sID, horario) {
 
-        // fetch("http://localhost:5000/Seleccion/Horario/Verificar", {
-        //     method: "POST",
-        //     body: JSON.stringify({
-        //         horarioV: 1,
-        //         horarioN: 2,
-        //     }),
-        //     headers: {
-        //         "Content-type": "application/json; charset=UTF-8",
-        //     },
-        // })
-        //     .then((response) => response.json())
-        //     .then((data) => {
-        //         setHorario(data)
-        //     })
-        //     .catch((err) => {
-        //         console.log(err.message);
-        //     });
-
-        // if(horario[0].Valido === 0){
-        //     fetch("http://localhost:5000/Seleccion/Estudiantes/Seleccionar", {
-        //     method: "POST",
-        //     body: JSON.stringify({
-        //         estudiante: localStorage.getItem("userUsuario"),
-        //         seccion: sID,
-        //     }),
-        //     headers: {
-        //         "Content-type": "application/json; charset=UTF-8",
-        //     },
-        // })
-        //     .then((response) => response.json())
-        //     .then((data) => {
-        //         console.log(data);
-        //         window.location.reload();
-        //     })
-        //     .catch((err) => {
-        //         console.log(err.message);
-        //     });
-        // }
-        // else{
-        //     alert("Esa seccion choca con una de tus asignaturas!");
-        // }
-    }
+        fetch("http://localhost:5000/Seleccion/Estudiantes/Seleccionar", {
+            method: "POST",
+            body: JSON.stringify({
+                estudiante: localStorage.getItem("userUsuario"),
+                seccion: sID,
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                window.location.reload();
+            })
+            .catch((err) => {
+                console.log(err.message);
+            });
+        
+    };
     const quitarSeccion = (sID) => {
         fetch("http://localhost:5000/Seleccion/Estudiantes/QuitarSeleccion", {
             method: "DELETE",
@@ -227,105 +203,85 @@ function SeleccionarAsignaturas() {
                     Guardar selección
                 </Button>
                 <Segment color="blue" style={{ margin: "20px" }}>
-                    <div style={{ padding: "10px" }}>
-                        <Header as="h2">Asignaturas seleccionadas</Header>
-                        <Table color="blue">
-                            <Table.Header>
-                                <Table.Row>
-                                    <Table.HeaderCell>Sección</Table.HeaderCell>
-                                    <Table.HeaderCell>
-                                        Asignatura
-                                    </Table.HeaderCell>
-                                    <Table.HeaderCell>
-                                        Créditos
-                                    </Table.HeaderCell>
-                                    <Table.HeaderCell>Lunes</Table.HeaderCell>
-                                    <Table.HeaderCell>Martes</Table.HeaderCell>
-                                    <Table.HeaderCell>
-                                        Miércoles
-                                    </Table.HeaderCell>
-                                    <Table.HeaderCell>Jueves</Table.HeaderCell>
-                                    <Table.HeaderCell>Viernes</Table.HeaderCell>
-                                    <Table.HeaderCell>Sábado</Table.HeaderCell>
-                                    <Table.HeaderCell>
-                                        Profesor
-                                    </Table.HeaderCell>
-                                    <Table.HeaderCell>Acción</Table.HeaderCell>
+                    <Header as="h2">Asignaturas seleccionadas</Header>
+                    <Table>
+                        <Table.Header>
+                            <Table.Row>
+                                <Table.HeaderCell>Sección</Table.HeaderCell>
+                                <Table.HeaderCell>Asignatura</Table.HeaderCell>
+                                <Table.HeaderCell>Créditos</Table.HeaderCell>
+                                <Table.HeaderCell>Lunes</Table.HeaderCell>
+                                <Table.HeaderCell>Martes</Table.HeaderCell>
+                                <Table.HeaderCell>Miércoles</Table.HeaderCell>
+                                <Table.HeaderCell>Jueves</Table.HeaderCell>
+                                <Table.HeaderCell>Viernes</Table.HeaderCell>
+                                <Table.HeaderCell>Sábado</Table.HeaderCell>
+                                <Table.HeaderCell>Profesor</Table.HeaderCell>
+                                <Table.HeaderCell>Acción</Table.HeaderCell>
+                            </Table.Row>
+                        </Table.Header>
+                        <Table.Body>
+                            {horariosCombinados.map((asignatura, index) => (
+                                <Table.Row key={index}>
+                                    <Table.Cell>{asignatura.Codigo}</Table.Cell>
+                                    <Table.Cell>
+                                        {asignatura.Asignatura}
+                                    </Table.Cell>
+                                    <Table.Cell>
+                                        {asignatura.Creditos}
+                                    </Table.Cell>
+                                    <Table.Cell>
+                                        {asignatura.Lunes
+                                            ? reformatHorario(asignatura.Lunes)
+                                            : asignatura.Lunes}
+                                    </Table.Cell>
+                                    <Table.Cell>
+                                        {asignatura.Martes
+                                            ? reformatHorario(asignatura.Martes)
+                                            : asignatura.Martes}
+                                    </Table.Cell>
+                                    <Table.Cell>
+                                        {asignatura.Miercoles
+                                            ? reformatHorario(
+                                                asignatura.Miercoles
+                                            )
+                                            : asignatura.Miercoles}
+                                    </Table.Cell>
+                                    <Table.Cell>
+                                        {asignatura.Jueves
+                                            ? reformatHorario(asignatura.Jueves)
+                                            : asignatura.Jueves}
+                                    </Table.Cell>
+                                    <Table.Cell>
+                                        {asignatura.Viernes
+                                            ? reformatHorario(
+                                                asignatura.Viernes
+                                            )
+                                            : asignatura.Viernes}
+                                    </Table.Cell>
+                                    <Table.Cell>
+                                        {asignatura.Sabado
+                                            ? reformatHorario(asignatura.Sabado)
+                                            : asignatura.Sabado}
+                                    </Table.Cell>
+                                    <Table.Cell>
+                                        {asignatura.Profesor}
+                                    </Table.Cell>
+                                    <Table.Cell>
+                                        <Button
+                                            onClick={() => {
+                                                quitarSeccion(
+                                                    asignatura.seccionID
+                                                );
+                                            }}
+                                        >
+                                            Quitar
+                                        </Button>
+                                    </Table.Cell>
                                 </Table.Row>
-                            </Table.Header>
-                            <Table.Body>
-                                {horariosCombinados.map((asignatura, index) => (
-                                    <Table.Row key={index}>
-                                        <Table.Cell>
-                                            {asignatura.Codigo}
-                                        </Table.Cell>
-                                        <Table.Cell>
-                                            {asignatura.Asignatura}
-                                        </Table.Cell>
-                                        <Table.Cell>
-                                            {asignatura.Creditos}
-                                        </Table.Cell>
-                                        <Table.Cell>
-                                            {asignatura.Lunes
-                                                ? reformatHorario(
-                                                      asignatura.Lunes
-                                                  )
-                                                : asignatura.Lunes}
-                                        </Table.Cell>
-                                        <Table.Cell>
-                                            {asignatura.Martes
-                                                ? reformatHorario(
-                                                      asignatura.Martes
-                                                  )
-                                                : asignatura.Martes}
-                                        </Table.Cell>
-                                        <Table.Cell>
-                                            {asignatura.Miercoles
-                                                ? reformatHorario(
-                                                      asignatura.Miercoles
-                                                  )
-                                                : asignatura.Miercoles}
-                                        </Table.Cell>
-                                        <Table.Cell>
-                                            {asignatura.Jueves
-                                                ? reformatHorario(
-                                                      asignatura.Jueves
-                                                  )
-                                                : asignatura.Jueves}
-                                        </Table.Cell>
-                                        <Table.Cell>
-                                            {asignatura.Viernes
-                                                ? reformatHorario(
-                                                      asignatura.Viernes
-                                                  )
-                                                : asignatura.Viernes}
-                                        </Table.Cell>
-                                        <Table.Cell>
-                                            {asignatura.Sabado
-                                                ? reformatHorario(
-                                                      asignatura.Sabado
-                                                  )
-                                                : asignatura.Sabado}
-                                        </Table.Cell>
-                                        <Table.Cell>
-                                            {asignatura.Profesor}
-                                        </Table.Cell>
-                                        <Table.Cell>
-                                            <Button
-                                                onClick={() => {
-                                                    quitarSeccion(
-                                                        asignatura.seccionID,
-                                                        asignatura.horario
-                                                    );
-                                                }}
-                                            >
-                                                Quitar
-                                            </Button>
-                                        </Table.Cell>
-                                    </Table.Row>
-                                ))}
-                            </Table.Body>
-                        </Table>
+                            ))}
+                        </Table.Body>
+                    </Table>
 
                         <Divider></Divider>
 
