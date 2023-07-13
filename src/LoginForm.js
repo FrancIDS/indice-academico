@@ -83,14 +83,19 @@ const LoginForm = () => {
                                 onChange={handlePasswordChange}
                                 type="password"
                             />
-                            <div style={{ textAlign: "right", margin: "5px" }}>
-                                <Link to="/ForgottenPassword">
-                                    ¿Contraseña olvidada?
-                                </Link>
-                            </div>
                             <Button primary fluid type="submit">
                                 Iniciar sesión
                             </Button>
+                            <div
+                                style={{
+                                    textAlign: "right",
+                                    margin: "5px",
+                                }}
+                            >
+                                <Link to="/ForgottenPassword">
+                                    ¿Has olvidado tu contraseña?
+                                </Link>
+                            </div>
                         </Form>
                     </Grid.Column>
                 </Grid>

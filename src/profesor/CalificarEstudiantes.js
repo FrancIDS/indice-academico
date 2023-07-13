@@ -53,7 +53,7 @@ function CalificarEstudiantes() {
                                 <Table.Cell>A</Table.Cell>
                                 <Table.Cell>
                                     <Button primary compact>
-                                        Modificar
+                                        Calificar
                                     </Button>
                                 </Table.Cell>
                             </Table.Row>
@@ -63,7 +63,7 @@ function CalificarEstudiantes() {
                                 <Table.Cell>B+</Table.Cell>
                                 <Table.Cell>
                                     <Button primary compact>
-                                        Modificar
+                                        Calificar
                                     </Button>
                                 </Table.Cell>
                             </Table.Row>

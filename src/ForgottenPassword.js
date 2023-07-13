@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Container, Grid, Button, Form, Divider } from "semantic-ui-react";
+import {
+    Container,
+    Grid,
+    Button,
+    Form,
+    Divider,
+    Icon,
+} from "semantic-ui-react";
 
 function ForgottenPassword() {
     const navigate = useNavigate();
@@ -26,7 +33,7 @@ function ForgottenPassword() {
     // Validar usuario
     const handleSubmit = (e) => {
         if (usuario === "") {
-            alert("Porfavor, escribe un usuario")
+            alert("Porfavor, escribe un usuario");
         } else {
             e.preventDefault();
             fetch("http://localhost:5000/Informacion/Preguntas/Usuario", {
@@ -48,12 +55,11 @@ function ForgottenPassword() {
                             data[2].Pregunta,
                         ]);
                         alert("El usuario existe!");
-                    }else {
+                    } else {
                         alert("El usuario no existe!");
                     }
                 });
         }
-
     };
 
     // Conseguir contraseña
@@ -62,8 +68,8 @@ function ForgottenPassword() {
         console.log(respuesta1);
         console.log(respuesta2);
         console.log(respuesta3);
-        if ((respuesta1 === "") || (respuesta2 === "") || (respuesta3 === "")) {
-            alert("Responde todas las preguntas de seguridad!")
+        if (respuesta1 === "" || respuesta2 === "" || respuesta3 === "") {
+            alert("Responde todas las preguntas de seguridad!");
         } else {
             fetch("http://localhost:5000/Informacion/Contrasena/Recuperar", {
                 method: "POST",
@@ -82,7 +88,7 @@ function ForgottenPassword() {
                     if (data.length > 0) {
                         console.log(data);
                         alert("Contraseña: " + data[0].Contrasena);
-                    }else{
+                    } else {
                         alert("Respuestas incorrectas!");
                         setRespuesta1("");
                         setRespuesta2("");
@@ -90,8 +96,6 @@ function ForgottenPassword() {
                     }
                 });
         }
-
-
     };
 
     return (
@@ -110,9 +114,11 @@ function ForgottenPassword() {
                             boxShadow: "0 8px 16px rgba(0, 0, 0, 0.3)",
                         }}
                     >
-                        <Link to="/">
-                            <Button fluid>Volver</Button>
-                        </Link>
+                        <div style={{ width: "100px" }}>
+                            <Link to="/" style={{ margin: "auto" }}>
+                                <Icon name="close"></Icon>
+                            </Link>
+                        </div>
 
                         <Divider hidden />
 

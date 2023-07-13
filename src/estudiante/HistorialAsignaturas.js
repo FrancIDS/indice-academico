@@ -3,6 +3,17 @@ import Navbar from "../components/Navbar";
 import { Container, Header, Segment, Table } from "semantic-ui-react";
 
 const TablaAsignaturas = ({ asignaturas }) => {
+    const calificacionLetra = (calificacion) => {
+        if (calificacion >= 90) return "A";
+        else if (calificacion >= 85) return "B+";
+        else if (calificacion >= 80) return "B";
+        else if (calificacion >= 75) return "C+";
+        else if (calificacion >= 70) return "C";
+        else if (calificacion >= 60) return "D";
+        else return "F";
+        return "";
+    }
+
     return (
         <Table celled color="blue">
             <Table.Header>
@@ -19,7 +30,7 @@ const TablaAsignaturas = ({ asignaturas }) => {
                         <Table.Cell>{asignatura.Codigo}</Table.Cell>
                         <Table.Cell>{asignatura.Nombre}</Table.Cell>
                         <Table.Cell>{asignatura.Creditos}</Table.Cell>
-                        <Table.Cell>{asignatura.Calificacion}</Table.Cell>
+                        <Table.Cell>{calificacionLetra(asignatura.Calificacion) + " (" + asignatura.Calificacion + ")"}</Table.Cell>
                     </Table.Row>
                 ))}
             </Table.Body>
@@ -59,6 +70,7 @@ function HistorialAsignaturas() {
                     <TablaAsignaturas asignaturas={historial} />
                 </Segment>
             </Container>
+            <footer style={{ height: "50px" }}></footer>
         </div>
     );
 }
