@@ -151,7 +151,7 @@ function SeleccionarAsignaturas() {
         return inicio + " - " + fin;
     };
 
-    function agregarSeccion (sID, horario) {
+    function agregarSeccion (sID) {
 
         //Cambio
         fetch("http://localhost:5000/Seleccion/Estudiantes/Seleccionar", {
