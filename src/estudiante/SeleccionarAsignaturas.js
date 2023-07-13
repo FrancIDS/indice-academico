@@ -152,50 +152,25 @@ function SeleccionarAsignaturas() {
     };
 
     function agregarSeccion (sID, horario) {
-        let horario = dia.split(" - ");
-        console.log(horario);
 
-        // fetch("http://localhost:5000/Seleccion/Horario/Verificar", {
-        //     method: "POST",
-        //     body: JSON.stringify({
-        //         horarioV: 1,
-        //         horarioN: 2,
-        //     }),
-        //     headers: {
-        //         "Content-type": "application/json; charset=UTF-8",
-        //     },
-        // })
-        //     .then((response) => response.json())
-        //     .then((data) => {
-        //         setHorario(data)
-        //     })
-        //     .catch((err) => {
-        //         console.log(err.message);
-        //     });
-
-        // if(horario[0].Valido === 0){
-        //     fetch("http://localhost:5000/Seleccion/Estudiantes/Seleccionar", {
-        //     method: "POST",
-        //     body: JSON.stringify({
-        //         estudiante: localStorage.getItem("userUsuario"),
-        //         seccion: sID,
-        //     }),
-        //     headers: {
-        //         "Content-type": "application/json; charset=UTF-8",
-        //     },
-        // })
-        //     .then((response) => response.json())
-        //     .then((data) => {
-        //         console.log(data);
-        //         window.location.reload();
-        //     })
-        //     .catch((err) => {
-        //         console.log(err.message);
-        //     });
-        // }
-        // else{
-        //     alert("Esa seccion choca con una de tus asignaturas!");
-        // }
+        fetch("http://localhost:5000/Seleccion/Estudiantes/Seleccionar", {
+            method: "POST",
+            body: JSON.stringify({
+                estudiante: localStorage.getItem("userUsuario"),
+                seccion: sID,
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                window.location.reload();
+            })
+            .catch((err) => {
+                console.log(err.message);
+            });
         
     };
     const quitarSeccion = (sID) => {
@@ -296,8 +271,7 @@ function SeleccionarAsignaturas() {
                                         <Button
                                             onClick={() => {
                                                 quitarSeccion(
-                                                    asignatura.seccionID,
-                                                    asignatura.horario
+                                                    asignatura.seccionID
                                                 );
                                             }}
                                         >
