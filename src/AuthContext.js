@@ -8,32 +8,23 @@ const AuthProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [session, setSession] = useState();
 
-    useEffect(() => {
-
-        // const storedAuth = localStorage.getItem("isLoggedIn");
-
-        // if (storedAuth) {
-        //     setIsLoggedIn(JSON.parse(storedAuth));
-        // }
-    }, []);
-
     const login = (usuario, password) => {
-        fetch('http://localhost:5000/Usuarios/IniciarSesion', {
-            method: 'POST',
+        fetch("http://localhost:5000/Usuarios/IniciarSesion", {
+            method: "POST",
             body: JSON.stringify({
                 usuario: usuario,
                 contrasena: password,
             }),
             headers: {
-                'Content-type': 'application/json; charset=UTF-8',
+                "Content-type": "application/json; charset=UTF-8",
             },
         })
             .then((response) => response.json())
             .then((data) => {
                 setSession(data[0]);
                 console.log(data[0]);
-                console.log(session);
-                if (data.length > 0) {
+                if (data.length === 0) alert("Credenciales incorrectas");
+                else if (data.length > 0) {
                     console.log("Entre :D");
                     setIsLoggedIn(true);
                     localStorage.setItem("isLoggedIn", JSON.stringify(true));
@@ -45,41 +36,11 @@ const AuthProvider = ({ children }) => {
                     localStorage.setItem("userPassword", data[0].Contrasena);
                     localStorage.setItem("userRol", data[0].Rol);
                     navigate("/Menu");
-                }else{
-                    alert("Combinacion de credenciales incorrecta!");
                 }
             })
             .catch((err) => {
                 console.log(err.message);
             });
-
-        // if (usuario === "3" && password === "123") {
-        //     const rol = "Estudiante";
-        //     console.log("Entre :D");
-        //     setIsLoggedIn(true);
-        //     localStorage.setItem("isLoggedIn", JSON.stringify(true));
-        //     localStorage.setItem("userUsuario", usuario);
-        //     localStorage.setItem("userPassword", password);
-        //     localStorage.setItem("userRol", rol);
-        // }
-        // if (usuario === "2" && password === "123") {
-        //     const rol = "Profesor";
-        //     console.log("Entre :D");
-        //     setIsLoggedIn(true);
-        //     localStorage.setItem("isLoggedIn", JSON.stringify(true));
-        //     localStorage.setItem("userUsuario", usuario);
-        //     localStorage.setItem("userPassword", password);
-        //     localStorage.setItem("userRol", rol);
-        // }
-        // if (usuario === "1" && password === "123") {
-        //     const rol = "Administrador";
-        //     console.log("Entre :D");
-        //     setIsLoggedIn(true);
-        //     localStorage.setItem("isLoggedIn", JSON.stringify(true));
-        //     localStorage.setItem("userUsuario", usuario);
-        //     localStorage.setItem("userPassword", password);
-        //     localStorage.setItem("userRol", rol);
-        // }
     };
 
     const logout = () => {

@@ -12,7 +12,7 @@ const TablaAsignaturas = ({ asignaturas }) => {
         else if (calificacion >= 60) return "D";
         else return "F";
         return "";
-    }
+    };
 
     return (
         <Table celled color="blue">
@@ -30,7 +30,12 @@ const TablaAsignaturas = ({ asignaturas }) => {
                         <Table.Cell>{asignatura.Codigo}</Table.Cell>
                         <Table.Cell>{asignatura.Nombre}</Table.Cell>
                         <Table.Cell>{asignatura.Creditos}</Table.Cell>
-                        <Table.Cell>{calificacionLetra(asignatura.Calificacion) + " (" + asignatura.Calificacion + ")"}</Table.Cell>
+                        <Table.Cell>
+                            {calificacionLetra(asignatura.Calificacion) +
+                                " (" +
+                                asignatura.Calificacion +
+                                ")"}
+                        </Table.Cell>
                     </Table.Row>
                 ))}
             </Table.Body>
@@ -41,23 +46,23 @@ const TablaAsignaturas = ({ asignaturas }) => {
 function HistorialAsignaturas() {
     const [historial, setHistorial] = useState([]);
     useEffect(() => {
-        fetch('http://localhost:5000/Estudiantes/Asignaturas/Cursadas', {
-            method: 'POST',
+        fetch("http://localhost:5000/Estudiantes/Asignaturas/Cursadas", {
+            method: "POST",
             body: JSON.stringify({
                 usuario: localStorage.getItem("userUsuario"),
             }),
             headers: {
-                'Content-type': 'application/json; charset=UTF-8',
+                "Content-type": "application/json; charset=UTF-8",
             },
         })
             .then((response) => response.json())
             .then((data) => {
-                setHistorial(data)
+                setHistorial(data);
                 console.log(historial);
             })
             .catch((err) => {
-                console.log(err.message)
-            })
+                console.log(err.message);
+            });
         // data fetching here
     }, []);
 
@@ -67,7 +72,10 @@ function HistorialAsignaturas() {
             <Container>
                 <Header as="h1">Historial de asignaturas</Header>
                 <Segment color="blue">
-                    <TablaAsignaturas asignaturas={historial} />
+                    <div style={{ padding: "10px" }}>
+                        <Header as="h2">Periodo: 23-1</Header>
+                        <TablaAsignaturas asignaturas={historial} />
+                    </div>
                 </Segment>
             </Container>
             <footer style={{ height: "50px" }}></footer>

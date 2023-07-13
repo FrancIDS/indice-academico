@@ -151,7 +151,7 @@ function SeleccionarAsignaturas() {
         return inicio + " - " + fin;
     };
 
-    function agregarSeccion (sID, horario) {
+    function agregarSeccion(sID, dia) {
         let horario = dia.split(" - ");
         console.log(horario);
 
@@ -196,8 +196,7 @@ function SeleccionarAsignaturas() {
         // else{
         //     alert("Esa seccion choca con una de tus asignaturas!");
         // }
-        
-    };
+    }
     const quitarSeccion = (sID) => {
         fetch("http://localhost:5000/Seleccion/Estudiantes/QuitarSeleccion", {
             method: "DELETE",
@@ -220,7 +219,7 @@ function SeleccionarAsignaturas() {
     };
 
     return (
-        <div style={{ background: "#e8f4fc", height: "100vh" }}>
+        <div style={{ background: "#e8f4fc", height: "100%" }}>
             <Navbar selectedButton={"SeleccionarAsignaturas"} />
             <Container>
                 <Header as="h1">Seleccionar asignaturas</Header>
@@ -228,172 +227,213 @@ function SeleccionarAsignaturas() {
                     Guardar selección
                 </Button>
                 <Segment color="blue" style={{ margin: "20px" }}>
-                    <Header as="h2">Asignaturas seleccionadas</Header>
-                    <Table>
-                        <Table.Header>
-                            <Table.Row>
-                                <Table.HeaderCell>Sección</Table.HeaderCell>
-                                <Table.HeaderCell>Asignatura</Table.HeaderCell>
-                                <Table.HeaderCell>Créditos</Table.HeaderCell>
-                                <Table.HeaderCell>Lunes</Table.HeaderCell>
-                                <Table.HeaderCell>Martes</Table.HeaderCell>
-                                <Table.HeaderCell>Miércoles</Table.HeaderCell>
-                                <Table.HeaderCell>Jueves</Table.HeaderCell>
-                                <Table.HeaderCell>Viernes</Table.HeaderCell>
-                                <Table.HeaderCell>Sábado</Table.HeaderCell>
-                                <Table.HeaderCell>Profesor</Table.HeaderCell>
-                                <Table.HeaderCell>Acción</Table.HeaderCell>
-                            </Table.Row>
-                        </Table.Header>
-                        <Table.Body>
-                            {horariosCombinados.map((asignatura, index) => (
-                                <Table.Row key={index}>
-                                    <Table.Cell>{asignatura.Codigo}</Table.Cell>
-                                    <Table.Cell>
-                                        {asignatura.Asignatura}
-                                    </Table.Cell>
-                                    <Table.Cell>
-                                        {asignatura.Creditos}
-                                    </Table.Cell>
-                                    <Table.Cell>
-                                        {asignatura.Lunes
-                                            ? reformatHorario(asignatura.Lunes)
-                                            : asignatura.Lunes}
-                                    </Table.Cell>
-                                    <Table.Cell>
-                                        {asignatura.Martes
-                                            ? reformatHorario(asignatura.Martes)
-                                            : asignatura.Martes}
-                                    </Table.Cell>
-                                    <Table.Cell>
-                                        {asignatura.Miercoles
-                                            ? reformatHorario(
-                                                asignatura.Miercoles
-                                            )
-                                            : asignatura.Miercoles}
-                                    </Table.Cell>
-                                    <Table.Cell>
-                                        {asignatura.Jueves
-                                            ? reformatHorario(asignatura.Jueves)
-                                            : asignatura.Jueves}
-                                    </Table.Cell>
-                                    <Table.Cell>
-                                        {asignatura.Viernes
-                                            ? reformatHorario(
-                                                asignatura.Viernes
-                                            )
-                                            : asignatura.Viernes}
-                                    </Table.Cell>
-                                    <Table.Cell>
-                                        {asignatura.Sabado
-                                            ? reformatHorario(asignatura.Sabado)
-                                            : asignatura.Sabado}
-                                    </Table.Cell>
-                                    <Table.Cell>
-                                        {asignatura.Profesor}
-                                    </Table.Cell>
-                                    <Table.Cell>
-                                        <Button
-                                            onClick={() => {
-                                                quitarSeccion(
-                                                    asignatura.seccionID,
-                                                    asignatura.horario
-                                                );
-                                            }}
-                                        >
-                                            Quitar
-                                        </Button>
-                                    </Table.Cell>
+                    <div style={{ padding: "10px" }}>
+                        <Header as="h2">Asignaturas seleccionadas</Header>
+                        <Table color="blue">
+                            <Table.Header>
+                                <Table.Row>
+                                    <Table.HeaderCell>Sección</Table.HeaderCell>
+                                    <Table.HeaderCell>
+                                        Asignatura
+                                    </Table.HeaderCell>
+                                    <Table.HeaderCell>
+                                        Créditos
+                                    </Table.HeaderCell>
+                                    <Table.HeaderCell>Lunes</Table.HeaderCell>
+                                    <Table.HeaderCell>Martes</Table.HeaderCell>
+                                    <Table.HeaderCell>
+                                        Miércoles
+                                    </Table.HeaderCell>
+                                    <Table.HeaderCell>Jueves</Table.HeaderCell>
+                                    <Table.HeaderCell>Viernes</Table.HeaderCell>
+                                    <Table.HeaderCell>Sábado</Table.HeaderCell>
+                                    <Table.HeaderCell>
+                                        Profesor
+                                    </Table.HeaderCell>
+                                    <Table.HeaderCell>Acción</Table.HeaderCell>
                                 </Table.Row>
-                            ))}
-                        </Table.Body>
-                    </Table>
+                            </Table.Header>
+                            <Table.Body>
+                                {horariosCombinados.map((asignatura, index) => (
+                                    <Table.Row key={index}>
+                                        <Table.Cell>
+                                            {asignatura.Codigo}
+                                        </Table.Cell>
+                                        <Table.Cell>
+                                            {asignatura.Asignatura}
+                                        </Table.Cell>
+                                        <Table.Cell>
+                                            {asignatura.Creditos}
+                                        </Table.Cell>
+                                        <Table.Cell>
+                                            {asignatura.Lunes
+                                                ? reformatHorario(
+                                                      asignatura.Lunes
+                                                  )
+                                                : asignatura.Lunes}
+                                        </Table.Cell>
+                                        <Table.Cell>
+                                            {asignatura.Martes
+                                                ? reformatHorario(
+                                                      asignatura.Martes
+                                                  )
+                                                : asignatura.Martes}
+                                        </Table.Cell>
+                                        <Table.Cell>
+                                            {asignatura.Miercoles
+                                                ? reformatHorario(
+                                                      asignatura.Miercoles
+                                                  )
+                                                : asignatura.Miercoles}
+                                        </Table.Cell>
+                                        <Table.Cell>
+                                            {asignatura.Jueves
+                                                ? reformatHorario(
+                                                      asignatura.Jueves
+                                                  )
+                                                : asignatura.Jueves}
+                                        </Table.Cell>
+                                        <Table.Cell>
+                                            {asignatura.Viernes
+                                                ? reformatHorario(
+                                                      asignatura.Viernes
+                                                  )
+                                                : asignatura.Viernes}
+                                        </Table.Cell>
+                                        <Table.Cell>
+                                            {asignatura.Sabado
+                                                ? reformatHorario(
+                                                      asignatura.Sabado
+                                                  )
+                                                : asignatura.Sabado}
+                                        </Table.Cell>
+                                        <Table.Cell>
+                                            {asignatura.Profesor}
+                                        </Table.Cell>
+                                        <Table.Cell>
+                                            <Button
+                                                onClick={() => {
+                                                    quitarSeccion(
+                                                        asignatura.seccionID,
+                                                        asignatura.horario
+                                                    );
+                                                }}
+                                            >
+                                                Quitar
+                                            </Button>
+                                        </Table.Cell>
+                                    </Table.Row>
+                                ))}
+                            </Table.Body>
+                        </Table>
 
-                    <Divider></Divider>
+                        <Divider></Divider>
 
-                    <Header as="h2">
-                        Asignaturas disponibles para seleccionar
-                    </Header>
-                    <Table>
-                        <Table.Header>
-                            <Table.Row>
-                                <Table.HeaderCell>Sección</Table.HeaderCell>
-                                <Table.HeaderCell>Asignatura</Table.HeaderCell>
-                                <Table.HeaderCell>Créditos</Table.HeaderCell>
-                                <Table.HeaderCell>Lunes</Table.HeaderCell>
-                                <Table.HeaderCell>Martes</Table.HeaderCell>
-                                <Table.HeaderCell>Miércoles</Table.HeaderCell>
-                                <Table.HeaderCell>Jueves</Table.HeaderCell>
-                                <Table.HeaderCell>Viernes</Table.HeaderCell>
-                                <Table.HeaderCell>Sábado</Table.HeaderCell>
-                                <Table.HeaderCell>Profesor</Table.HeaderCell>
-                                <Table.HeaderCell>Acción</Table.HeaderCell>
-                            </Table.Row>
-                        </Table.Header>
-                        <Table.Body>
-                            {horariosCombinadoPs.map((asignatura, index) => (
-                                <Table.Row key={index}>
-                                    <Table.Cell>{asignatura.Codigo}</Table.Cell>
-                                    <Table.Cell>
-                                        {asignatura.Asignatura}
-                                    </Table.Cell>
-                                    <Table.Cell>
-                                        {asignatura.Creditos}
-                                    </Table.Cell>
-                                    <Table.Cell>
-                                        {asignatura.Lunes
-                                            ? reformatHorario(asignatura.Lunes)
-                                            : asignatura.Lunes}
-                                    </Table.Cell>
-                                    <Table.Cell>
-                                        {asignatura.Martes
-                                            ? reformatHorario(asignatura.Martes)
-                                            : asignatura.Martes}
-                                    </Table.Cell>
-                                    <Table.Cell>
-                                        {asignatura.Miercoles
-                                            ? reformatHorario(
-                                                asignatura.Miercoles
-                                            )
-                                            : asignatura.Miercoles}
-                                    </Table.Cell>
-                                    <Table.Cell>
-                                        {asignatura.Jueves
-                                            ? reformatHorario(asignatura.Jueves)
-                                            : asignatura.Jueves}
-                                    </Table.Cell>
-                                    <Table.Cell>
-                                        {asignatura.Viernes
-                                            ? reformatHorario(
-                                                asignatura.Viernes
-                                            )
-                                            : asignatura.Viernes}
-                                    </Table.Cell>
-                                    <Table.Cell>
-                                        {asignatura.Sabado
-                                            ? reformatHorario(asignatura.Sabado)
-                                            : asignatura.Sabado}
-                                    </Table.Cell>
-                                    <Table.Cell>
-                                        {asignatura.Profesor}
-                                    </Table.Cell>
-                                    <Table.Cell>
-                                        <Button
-                                            onClick={() => {
-                                                agregarSeccion(
-                                                    asignatura.seccionID
-                                                );
-                                            }}
-                                        >
-                                            Agregar
-                                        </Button>
-                                    </Table.Cell>
+                        <Header as="h2">
+                            Asignaturas disponibles para seleccionar
+                        </Header>
+                        <Table color="blue">
+                            <Table.Header>
+                                <Table.Row>
+                                    <Table.HeaderCell>Sección</Table.HeaderCell>
+                                    <Table.HeaderCell>
+                                        Asignatura
+                                    </Table.HeaderCell>
+                                    <Table.HeaderCell>
+                                        Créditos
+                                    </Table.HeaderCell>
+                                    <Table.HeaderCell>Lunes</Table.HeaderCell>
+                                    <Table.HeaderCell>Martes</Table.HeaderCell>
+                                    <Table.HeaderCell>
+                                        Miércoles
+                                    </Table.HeaderCell>
+                                    <Table.HeaderCell>Jueves</Table.HeaderCell>
+                                    <Table.HeaderCell>Viernes</Table.HeaderCell>
+                                    <Table.HeaderCell>Sábado</Table.HeaderCell>
+                                    <Table.HeaderCell>
+                                        Profesor
+                                    </Table.HeaderCell>
+                                    <Table.HeaderCell>Acción</Table.HeaderCell>
                                 </Table.Row>
-                            ))}
-                        </Table.Body>
-                    </Table>
+                            </Table.Header>
+                            <Table.Body>
+                                {horariosCombinadoPs.map(
+                                    (asignatura, index) => (
+                                        <Table.Row key={index}>
+                                            <Table.Cell>
+                                                {asignatura.Codigo}
+                                            </Table.Cell>
+                                            <Table.Cell>
+                                                {asignatura.Asignatura}
+                                            </Table.Cell>
+                                            <Table.Cell>
+                                                {asignatura.Creditos}
+                                            </Table.Cell>
+                                            <Table.Cell>
+                                                {asignatura.Lunes
+                                                    ? reformatHorario(
+                                                          asignatura.Lunes
+                                                      )
+                                                    : asignatura.Lunes}
+                                            </Table.Cell>
+                                            <Table.Cell>
+                                                {asignatura.Martes
+                                                    ? reformatHorario(
+                                                          asignatura.Martes
+                                                      )
+                                                    : asignatura.Martes}
+                                            </Table.Cell>
+                                            <Table.Cell>
+                                                {asignatura.Miercoles
+                                                    ? reformatHorario(
+                                                          asignatura.Miercoles
+                                                      )
+                                                    : asignatura.Miercoles}
+                                            </Table.Cell>
+                                            <Table.Cell>
+                                                {asignatura.Jueves
+                                                    ? reformatHorario(
+                                                          asignatura.Jueves
+                                                      )
+                                                    : asignatura.Jueves}
+                                            </Table.Cell>
+                                            <Table.Cell>
+                                                {asignatura.Viernes
+                                                    ? reformatHorario(
+                                                          asignatura.Viernes
+                                                      )
+                                                    : asignatura.Viernes}
+                                            </Table.Cell>
+                                            <Table.Cell>
+                                                {asignatura.Sabado
+                                                    ? reformatHorario(
+                                                          asignatura.Sabado
+                                                      )
+                                                    : asignatura.Sabado}
+                                            </Table.Cell>
+                                            <Table.Cell>
+                                                {asignatura.Profesor}
+                                            </Table.Cell>
+                                            <Table.Cell>
+                                                <Button
+                                                    onClick={() => {
+                                                        agregarSeccion(
+                                                            asignatura.seccionID
+                                                        );
+                                                    }}
+                                                >
+                                                    Agregar
+                                                </Button>
+                                            </Table.Cell>
+                                        </Table.Row>
+                                    )
+                                )}
+                            </Table.Body>
+                        </Table>
+                    </div>
                 </Segment>
             </Container>
+            <footer style={{ height: "50px" }}></footer>
         </div>
     );
 }

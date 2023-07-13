@@ -114,14 +114,11 @@ function ForgottenPassword() {
                             boxShadow: "0 8px 16px rgba(0, 0, 0, 0.3)",
                         }}
                     >
-                        <div style={{ width: "100px" }}>
-                            <Link to="/" style={{ margin: "auto" }}>
-                                <Icon name="close"></Icon>
+                        <div style={{ display: "grid", justifyItems: "right", margin: "10px" }}>
+                            <Link to="/">
+                                <Icon name="close" size="large"></Icon>
                             </Link>
                         </div>
-
-                        <Divider hidden />
-
                         <Form onSubmit={handleSubmit}>
                             <Form.Input
                                 fluid
